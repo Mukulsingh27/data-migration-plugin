@@ -68,6 +68,13 @@ class Categories extends Migrate {
 	 *
 	 * [--offset=<number>]
 	 * : starting from offset
+	 * ---
+	 * default: 0
+	 * 
+	 * [--batch=<number>]
+	 * : Number of rows to process at a time.
+	 * ---
+	 * default: 200
 	 *
 	 * [--log-file=<file>]
 	 * : Path to the log file.
