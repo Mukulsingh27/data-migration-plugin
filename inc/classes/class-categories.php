@@ -25,13 +25,6 @@ class Categories extends Migrate {
 	private int $total_found = 0;
 
 	/**
-	 * Total updated categories.
-	 *
-	 * @var int
-	 */
-	private int $total_update = 0;
-
-	/**
 	 * Total added categories.
 	 *
 	 * @var int
@@ -44,6 +37,13 @@ class Categories extends Migrate {
 	 * @var int
 	 */
 	private int $total_failed = 0;
+
+	/**
+	 * Total Skipped categories.
+	 *
+	 * @var int
+	 */
+	private int $total_skipped = 0;
 
 	/**
 	 * WP-CLI command to migrate categories.
@@ -155,9 +155,9 @@ class Categories extends Migrate {
 		// Print total number of categories updated.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of categories which were updated', 'ms-migration' ),
+				__( '%s: Total %d number of categories which were skipped', 'ms-migration' ),
 				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
-				$this->total_update
+				$this->total_skipped
 			)
 		);
 
@@ -197,6 +197,33 @@ class Categories extends Migrate {
 	private function process_categories( array $row ): void {
 		// Flush cache.
 		wp_cache_flush();
+
+		// Check if category already exists.
+		$term = get_term_by( 'name', $row['name'], 'category' );
+
+		if ( $term ) {
+			if ( ! empty( $this->dry_run ) ) {
+				$this->write_log(
+					sprintf(
+						__( 'Dry-run: ID:%d %s category already exists, therefore skipping..', 'ms-migration' ),
+						$row[ 'id' ],
+						$row[ 'name' ]
+					)
+				);
+				$this->total_skipped++;
+				return;
+			} else {
+				$this->write_log(
+					sprintf(
+						__( 'ID:%d %s category already exists, therefore skipped', 'ms-migration' ),
+						$row[ 'id' ],
+						$row[ 'name' ]
+					)
+				);
+				$this->total_skipped++;
+				return;
+			}
+		}
 
 		if ( $this->dry_run ) {
 			$this->write_log(
