@@ -132,13 +132,12 @@ class Posts extends Migrate {
 			$count = 0;
 			$articles = $this->get_articles( $offset, $batch );
 
-			foreach ( $articles as $user ) {
+			foreach ( $articles as $article ) {
 				if (! empty( $progress ) && empty( $this->logs ) ) {
 					$progress->tick();
 				}
 
-				$this->process_articles( $user );
-
+				$this->process_articles( $article );
 				$count++;
 			}
 
@@ -212,7 +211,7 @@ class Posts extends Migrate {
 		);
 
 		// Finish progressbar.
-		if (! empty( $progress ) && empty( $this->logs ) ) {
+		if ( ! empty( $progress ) && empty( $this->logs ) ) {
 			$progress->finish();
 		}
 
@@ -233,11 +232,11 @@ class Posts extends Migrate {
 
 		// Post data.
 		$post_data = [
-		'post_title'    => ! empty($row[ 'title' ] ) ? $row[ 'title' ] : '',
-		'post_modified' => ! empty($row[ 'updated' ] ) ? $row[ 'updated' ] : '',
-		'post_date'     => ! empty($row[ 'added' ] ) ? $row[ 'added' ] : '',
-		'post_content'  => ! empty($row[ 'html' ] ) ? $row[ 'html' ] : '',
-		'post_type'     => isset($row[ 'type' ] ) ? $row[ 'type' ] : 'post',
+		'post_title'    => ! empty( $row[ 'title' ] ) ? $row[ 'title' ] : '',
+		'post_modified' => ! empty( $row[ 'updated' ] ) ? $row[ 'updated' ] : '',
+		'post_date'     => ! empty( $row[ 'added' ] ) ? $row[ 'added' ] : '',
+		'post_content'  => ! empty( $row[ 'html' ] ) ? $row[ 'html' ] : '',
+		'post_type'     => isset( $row[ 'type' ] ) ? $row[ 'type' ] : 'post',
 		];
 
 		// Check already exists post.

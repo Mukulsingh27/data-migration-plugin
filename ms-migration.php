@@ -8,7 +8,7 @@
 /**
  * Plugin Name: MS Migration
  * Plugin URI:  https://rtCamp.com
- * Description: Migration script for data-migration. This plugin will help to migrate old site to WP site.
+ * Description: Migration script for data-migration. This plugin will help to migrate data to new WP site.
  * Version:     0.1.0
  * Author:      Mukul
  * Author URI:  https://github.com/Mukulsingh27

@@ -90,6 +90,7 @@ class Categories extends Migrate {
 		// Starting time of the script.
 		$start_time = time();
 
+		// Extract arguments.
 		$this->extract_args( $assoc_args );
 
 		// Offset for the query.
@@ -105,7 +106,7 @@ class Categories extends Migrate {
 		$total_count = $this->get_total_categories();
 
 		// Progressbar.
-		if (empty( $this->logs ) ) {
+		if ( empty( $this->logs ) ) {
 			$progress = \WP_CLI\Utils\make_progress_bar( __( 'Category Migration', 'ms-migration' ), $total_count, 10 );
 		}
 
@@ -116,12 +117,12 @@ class Categories extends Migrate {
 			$count = 0;
 			$categories  = $this->get_categories( $offset, $batch );
 
-			foreach ( $categories as $row ) {
+			foreach ( $categories as $category ) {
 				if ( ! empty( $progress ) && empty( $this->logs ) ) {
 					$progress->tick();
 				}
 
-				$this->process_categories( $row );
+				$this->process_categories( $category );
 				$count++;
 			}
 
@@ -159,7 +160,7 @@ class Categories extends Migrate {
 			)
 		);
 
-		// Print total number of categories updated.
+		// Print total number of categories skipped.
 		$this->write_log(
 			sprintf(
 				__( '%s: Total %d number of categories which were skipped', 'ms-migration' ),

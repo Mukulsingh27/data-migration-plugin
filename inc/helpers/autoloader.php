@@ -29,10 +29,10 @@ function autoloader( $resource = '' )
         str_replace( '_', '-', strtolower( $resource ) )
     );
 
-    /*
-    * Time to determine which type of resource path it is,
-    * so that we can deduce the correct file path for it.
-    */
+	/**
+	  * Time to determine which type of resource path it is,
+	  * so that we can deduce the correct file path for it.
+	  */
     if ( ( ! empty($path[2]) && 'inc' === $path[2] )
         && ( ! empty($path[3]) && 'helpers' !== $path[3] )
     ) {
@@ -90,7 +90,7 @@ function autoloader( $resource = '' )
 
     }
 
-    if (file_exists( $resource_path ) && validate_file( $resource_path ) === 0 ) {
+    if ( file_exists( $resource_path ) && validate_file( $resource_path ) === 0 ) {
         include_once $resource_path;
     }
 }

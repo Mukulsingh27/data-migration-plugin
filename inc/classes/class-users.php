@@ -30,7 +30,7 @@ class Users extends Migrate {
 	 *
 	 * @var int
 	 */
-	private int $total_update = 0;
+	private int $total_skipped = 0;
 
 	/**
 	 * Total added user.
@@ -166,12 +166,12 @@ class Users extends Migrate {
 			)
 		);
 
-		// Print total number of user updated.
+		// Print total number of user skipped.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of users which were updated', 'ms-migration' ),
+				__( '%s: Total %d number of users which were skipped', 'ms-migration' ),
 				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
-				$this->total_update
+				$this->total_skipped
 			)
 		);
 
@@ -232,6 +232,9 @@ class Users extends Migrate {
 			return;
 		}
 
+		// Check if user already exists.
+		$user_id = $this->user_exists( $user[ 'email' ] );
+
 		// Check for duplicate user entry.
 		if ( in_array( $sanitized_email, $this->user_emails, true ) ) {
 			$this->duplicate_user = true;
@@ -239,17 +242,15 @@ class Users extends Migrate {
 			$this->duplicate_user = false;
 		}
 
-		$user_id = $this->user_exists( $user[ 'email' ] );
-
-		if ($this->dry_run ) {
+		if ( $this->dry_run ) {
 			if ( ! empty( $user_id ) ) {
 				if ( ! $this->duplicate_user ) {
-					$this->total_update++;
+					$this->total_skipped++;
 				}
 
 				$this->success(
 					sprintf(
-						__( 'Dry-run: Old User ID:%d user %s will be updated!', 'ms-migration' ),
+						__( 'Dry-run: Old User ID:%d user %s will be skipped!', 'ms-migration' ),
 						$user[ 'id' ],
 						$user_display_name
 					)
@@ -335,12 +336,12 @@ class Users extends Migrate {
 
 		if ( ! empty( $user_id ) ) {
 			if ( ! $this->duplicate_user ) {
-				$this->total_update++;
+				$this->total_skipped++;
 			}
 
 			$this->success(
 				sprintf(
-					__( 'Old user ID:%d user %s updated!', 'ms-migration' ),
+					__( 'Old user ID:%d user %s skipped!', 'ms-migration' ),
 					$user[ 'id' ],
 					$display_name
 				)

@@ -2,7 +2,7 @@
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-Provides WP_CLI commands to migrate old data to your new WordPress site using command line interface.
+Provides WP_CLI commands to migrate data to your new WordPress site using command line interface.
 
 ## Migration from MSSQL
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Base class for WP-CLI migrations.
+ * Class for WP-CLI migrations.
  *
  * @package ms-migration
  */
@@ -32,7 +32,6 @@ class Plugin {
 		}
 
 		return $instance;
-
 	}
 
 	/**

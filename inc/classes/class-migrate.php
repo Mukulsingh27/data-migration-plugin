@@ -71,8 +71,8 @@ class Migrate {
 			$this->log_file = $assoc_args[ 'log-file' ];
 		}
 
-		if (isset( $assoc_args['logs']) ) {
-			$this->logs = empty($assoc_args[ 'logs' ] ) || 'true' === $assoc_args[' logs' ];
+		if (isset( $assoc_args[ 'logs' ]) ) {
+			$this->logs = empty( $assoc_args[ 'logs' ] ) || 'true' === $assoc_args[' logs' ];
 		} else {
 			$this->logs = false;
 		}
@@ -281,7 +281,7 @@ class Migrate {
 
 		// Check connection
 		if ( $this->connection->connect_errno ) {
-		 echo 'Failed to connect to MySQL: ' . $this->connection->connect_error;
+			echo 'Failed to connect to MySQL: ' . $this->connection->connect_error;
 			exit();
 		}
 		$this->connection->set_charset( 'utf8' );
@@ -390,18 +390,14 @@ class Migrate {
 
 		// Update post_date field of given post.
 		if ( ! empty( $postarr['post_date'] ) ) {
-
 			$data['post_date_gmt'] = get_gmt_from_date( $postarr['post_date'], 'Y-m-d H:i:s' );
 			$data['post_date']     = $postarr['post_date'];
-
 		}
 
 		// Update post_modified field of given post.
 		if ( ! empty( $postarr['post_modified'] ) ) {
-
 			$data['post_modified_gmt'] = get_gmt_from_date( $postarr['post_modified'], 'Y-m-d H:i:s' );
 			$data['post_modified']     = $postarr['post_modified'];
-
 		}
 
 		return $data;
