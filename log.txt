@@ -1,35 +1,52 @@
 Starting migration of categories...
-Success: Old category ID:0 WP term ID:19 category sint inserted. Updating meta...
-Success: Old category ID:0 WP term ID:20 category placeat inserted. Updating meta...
-Success: Old category ID:0 WP term ID:21 category ullam inserted. Updating meta...
-Success: Old category ID:0 WP term ID:22 category perspiciatis inserted. Updating meta...
-Success: Old category ID:0 WP term ID:23 category architecto inserted. Updating meta...
+Warning: Old Category ID:1 category sed not found!
+Success: Old category ID:1 WP term ID:47 category sed inserted. Updating meta...
+ID:2 sed category already exists, therefore skipped
+Warning: Old Category ID:3 category magnam not found!
+Success: Old category ID:3 WP term ID:48 category magnam inserted. Updating meta...
+Warning: Old Category ID:4 category dolores not found!
+Success: Old category ID:4 WP term ID:49 category dolores inserted. Updating meta...
+Warning: Old Category ID:5 category eligendi not found!
+Success: Old category ID:5 WP term ID:50 category eligendi inserted. Updating meta...
+Warning: Old Category ID:6 category totam not found!
+Success: Old category ID:6 WP term ID:51 category totam inserted. Updating meta...
+Warning: Old Category ID:7 category a not found!
+Success: Old category ID:7 WP term ID:52 category a inserted. Updating meta...
+Warning: Old Category ID:8 category qui not found!
+Success: Old category ID:8 WP term ID:53 category qui inserted. Updating meta...
+Warning: Old Category ID:9 category dolor not found!
+Success: Old category ID:9 WP term ID:54 category dolor inserted. Updating meta...
+Warning: Old Category ID:10 category occaecati not found!
+Success: Old category ID:10 WP term ID:55 category occaecati inserted. Updating meta...
 
-Migration Result: There are total 5 number of categories
-Migration Result: Total 5 number of categories which were added
-Migration Result: Total 0 number of categories which were updated
+Migration Result: There are total 10 number of categories
+Migration Result: Total 9 number of categories which were added
+Migration Result: Total 1 number of categories which were skipped
 Migration Result: Total 0 number of categories which were failed
 Total time taken by this migration script: 1 second
 
 Starting Users Migration
-Success: Old user ID:0 user Ahmed Gutmann added!
-Success: Old user ID:0 user Ettie Koch added!
-Success: Old user ID:0 user Valentine Christiansen added!
-Success: Old user ID:0 user Maria Block added!
-Success: Old user ID:0 user Ericka Kuvalis added!
-Success: Old user ID:0 user Lester Mayert added!
-Success: Old user ID:0 user Mose Raynor added!
-Success: Old user ID:0 user Robin Swift added!
-Success: Old user ID:0 user Nickolas D'Amore added!
-Success: Old user ID:0 user Joelle Okuneva added!
+Success: Old user ID:1 user Madison Schoen added!
+Success: Old user ID:2 user Larry Heidenreich added!
+Success: Old user ID:3 user Kaycee Schaefer added!
+Success: Old user ID:4 user Barry Spencer added!
+Success: Old user ID:5 user Libbie Wiegand added!
+Success: Old user ID:6 user Sydnee Franecki added!
+Success: Old user ID:7 user Foster Feeney added!
+Success: Old user ID:8 user Lexus Herman added!
+Success: Old user ID:9 user Amina Cruickshank added!
+Success: Old user ID:10 user Lenna Kuhic added!
 
 Migration Result: Total 10 number of users which were added
-Migration Result: Total 0 number of users which were updated
+Migration Result: Total 0 number of users which were skipped
 Migration Result: Total 0 number of users which were failed
 Total time taken by this migration script: 2 seconds
 
+Fetching all users
+Fetched 10 users
+Fetching all categories
+Fetched 1 categories
 Starting migration of articles...
-Success: Successfully Migrated Post 1.
 Success: Successfully Migrated Post 2.
 Success: Successfully Migrated Post 3.
 Success: Successfully Migrated Post 4.
@@ -79,6 +96,7 @@ Success: Successfully Migrated Post 47.
 Success: Successfully Migrated Post 48.
 Success: Successfully Migrated Post 49.
 Success: Successfully Migrated Post 50.
+Success: Successfully Migrated Post 51.
 
 Migration Result: There are total 50 number of posts
 Migration Result: Total 50 number of posts which were added

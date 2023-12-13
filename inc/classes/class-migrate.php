@@ -54,6 +54,20 @@ class Migrate {
 	protected $statement = null;
 
 	/**
+	 * Category list.
+	 *
+	 * @var array
+	 */
+	protected array $categories = [];
+
+	/**
+	 * Users array.
+	 *
+	 * @var array
+	 */
+	protected array $users = [];
+
+	/**
 	 * Function to extract arguments.
 	 *
 	 * @param array $assoc_args Associative arguments.
@@ -401,5 +415,70 @@ class Migrate {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Function to get input from user to continue or not.
+	 *
+	 * @param string $question Question to ask.
+	 *
+	 * @return string
+	 */
+	protected function continue_execute( string $question ): string {
+
+		fwrite( STDOUT, $question . ' [y/n] ' );
+
+		return strtolower( trim( fgets( STDIN ) ) );
+
+	}
+
+	/**
+	 * Get all available categories for posts.
+	 */
+	protected function fetch_categories() {
+
+		$this->write_log( 'Fetching all categories' );
+
+		$categories = get_terms(
+			[
+				'hide_empty' => false,
+				'taxonomy'   => 'category',
+			]
+		);
+
+		$this->categories = [];
+
+		if ( ! is_wp_error( $categories ) ) {
+			foreach ( $categories as $category ) {
+				$old_id = get_term_meta( $category->term_id, '_old_category_id', true );
+				if ( ! empty( $old_id ) ) {
+					$this->categories[ $old_id ] = (int) $category->term_id;
+				}
+			}
+		}
+		$this->write_log( 'Fetched ' . count( $this->categories ) . ' categories' );
+	}
+
+	/**
+	 * Get all available WP users.
+	 */
+	protected function fetch_users() {
+
+		$this->write_log( 'Fetching all users' );
+
+		$users = get_users(
+			[
+				'fields' => 'ID',
+			]
+		);
+
+		foreach ( $users as $user ) {
+			$old_user_id = get_user_meta( $user, '_old_user_id', true );
+
+			if ( ! empty( $old_user_id ) ) {
+				$this->users[ $old_user_id ] = (int) $user;
+			}
+		}
+		$this->write_log( 'Fetched ' . count( $this->users ) . ' users' );
 	}
 }

@@ -113,6 +113,10 @@ class Posts extends Migrate {
 		// Batch size for the query.
 		$batch  = ! empty( $assoc_args['batch'] ) ? intval( $assoc_args['batch'] ) : 200;
 
+		// Fetch users and categories.
+		$this->fetch_users();
+		$this->fetch_categories();
+
 		// Start migration.
 		$this->start_migration();
 
@@ -232,11 +236,27 @@ class Posts extends Migrate {
 
 		// Post data.
 		$post_data = [
-		'post_title'    => ! empty( $row[ 'title' ] ) ? $row[ 'title' ] : '',
-		'post_modified' => ! empty( $row[ 'updated' ] ) ? $row[ 'updated' ] : '',
-		'post_date'     => ! empty( $row[ 'added' ] ) ? $row[ 'added' ] : '',
-		'post_content'  => ! empty( $row[ 'html' ] ) ? $row[ 'html' ] : '',
-		'post_type'     => isset( $row[ 'type' ] ) ? $row[ 'type' ] : 'post',
+			'post_title'    => ! empty( $row[ 'title' ] ) ? $row[ 'title' ] : '',
+			'post_modified' => ! empty( $row[ 'updated' ] ) ? $row[ 'updated' ] : '',
+			'post_date'     => ! empty( $row[ 'added' ] ) ? $row[ 'added' ] : '',
+			'post_content'  => ! empty( $row[ 'html' ] ) ? $row[ 'html' ] : '',
+			'post_type'     => isset( $row[ 'type' ] ) ? $row[ 'type' ] : 'post',
+		];
+
+		// Assign Category.
+		if ( ! empty( $row[ 'category' ] ) ) {
+			$post_data['post_category'][] = $this->categories[ intval( $row['category'] ) ];
+		}
+
+		// Assign Author.
+		if ( ! empty( $row['author'] ) ) {
+			$post_data['post_author'] = $this->users[ intval( $row['author'] ) ];
+		}
+
+		// Store legacy post data.
+		$post_data['meta_input'] = [
+			'_legacy_article_data' => $row,
+			'_old_article_id'      => $row['id'],
 		];
 
 		// Check already exists post.
@@ -261,7 +281,7 @@ class Posts extends Migrate {
 		}
 
 		// Post status
-		$post_data[ 'post_status' ] = match ( $row['status'] ) {
+		$post_data[ 'post_status' ] = match ( $row[ 'status' ] ) {
 			'Draft'  => 'draft',
 			'Trash'  => 'trash',
 			default  => 'publish', // published.

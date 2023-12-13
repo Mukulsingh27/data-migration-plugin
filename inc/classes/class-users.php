@@ -232,9 +232,6 @@ class Users extends Migrate {
 			return;
 		}
 
-		// Check if user already exists.
-		$user_id = $this->user_exists( $user[ 'email' ] );
-
 		// Check for duplicate user entry.
 		if ( in_array( $sanitized_email, $this->user_emails, true ) ) {
 			$this->duplicate_user = true;
@@ -242,8 +239,11 @@ class Users extends Migrate {
 			$this->duplicate_user = false;
 		}
 
+		// Check if user already exists.
+		$user_id = $this->user_exists( $user[ 'email' ] );
+
 		if ( $this->dry_run ) {
-			if ( ! empty( $user_id ) ) {
+			if ( 0 !== $user_id ) {
 				if ( ! $this->duplicate_user ) {
 					$this->total_skipped++;
 				}
@@ -268,7 +268,6 @@ class Users extends Migrate {
 					)
 				);
 			}
-
 			return;
 		}
 
@@ -288,7 +287,7 @@ class Users extends Migrate {
 		$user_login = substr( $user[ 'user_login' ], 0, 60);
 
 		// If user login is empty or already exists then create new user login with first name, last name and user id.
-		if (empty( $user_login ) || username_exists( $user_login ) ) {
+		if ( empty( $user_login ) || username_exists( $user_login ) ) {
 			if ( ! empty( $user[ 'first_name' ] ) ) {
 				$user_login = htmlspecialchars( strtolower( $user[ 'first_name' ] ) ) . '-';
 			}
@@ -305,13 +304,17 @@ class Users extends Migrate {
 
 		// User arguments.
 		$user_args = [
-		'user_login'      => $user_login,
-		'user_email'      => $user[ 'email' ] ?? null,
-		'display_name'    => trim( $display_name ),
-		'first_name'      => $user[ 'first_name' ] ?? null,
-		'last_name'       => $user[ 'last_name' ] ?? null,
-		'role'            => $this->handle_user_roles( $user[ 'role' ] ?? null ),
-		'user_pass'       => 'password', // Passwords are not migrated.
+			'user_login'      => $user_login,
+			'user_email'      => $user[ 'email' ] ?? null,
+			'display_name'    => trim( $display_name ),
+			'first_name'      => $user[ 'first_name' ] ?? null,
+			'last_name'       => $user[ 'last_name' ] ?? null,
+			'role'            => $this->handle_user_roles( $user[ 'role' ] ?? null ),
+			'user_pass'       => 'password', // Passwords are not migrated.
+			'meta_input'      => [
+				'_legacy_user_data' => $user,
+				'_old_user_id'      => $user['id'] ?? null,
+			],
 		];
 
 		// Set user id. If user id is set then user will be updated.
@@ -321,7 +324,7 @@ class Users extends Migrate {
 
 		$inserted_user_id = wp_insert_user( $user_args );
 
-		if (is_wp_error( $inserted_user_id ) ) {
+		if ( is_wp_error( $inserted_user_id ) ) {
 			$this->total_failed++;
 			$this->warning(
 				sprintf(
@@ -330,7 +333,6 @@ class Users extends Migrate {
 					$display_name
 				)
 			);
-
 			return;
 		}
 
@@ -443,11 +445,11 @@ class Users extends Migrate {
 	private function handle_user_roles( string $role ) : string {
 		// Default roles.
 		$default_roles = [
-		'administrator',
-		'editor',
-		'author',
-		'contributor',
-		'subscriber',
+			'administrator',
+			'editor',
+			'author',
+			'contributor',
+			'subscriber',
 		];
 
 		// Check if role is in default roles.

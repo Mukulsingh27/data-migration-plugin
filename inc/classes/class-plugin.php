@@ -48,5 +48,8 @@ class Plugin {
 
 		// Command to migrate users.
 		\WP_CLI::add_command( 'ms-migrate-users', '\MS\Migration\Inc\Users' );
+
+		// Command to cleanup.
+		\WP_CLI::add_command( 'ms-migrate', '\MS\Migration\Inc\Cleanup' );
 	}
 }

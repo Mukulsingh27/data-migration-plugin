@@ -206,6 +206,9 @@ class Categories extends Migrate {
 		// Flush cache.
 		wp_cache_flush();
 
+		// Store previous category id and data into term meta table.
+		$this->store_category_meta( $row );
+
 		// Check if category already exists.
 		$term = get_term_by( 'name', $row['name'], 'category' );
 
@@ -304,5 +307,45 @@ class Categories extends Migrate {
 		$categories = $this->get_sql_server_data( $query );
 
 		return $categories;
+	}
+
+	/**
+	 * Store category meta.
+	 *
+	 * @param array $row $row data.
+	 *
+	 * @return void
+	 */
+	private function store_category_meta( array $row ): void {
+		// Flush cache.
+		wp_cache_flush();
+
+		// Get term id.
+		$term = get_term_by( 'name', $row['name'], 'category' );
+
+		if ( ! $term ) {
+			$this->warning(
+				sprintf(
+					__( 'Old Category ID:%d category %s not found!', 'ms-migration' ),
+					$row[ 'id' ],
+					$row[ 'name' ]
+				)
+			);
+			return;
+		}
+
+		// Store previous category id and data into wp_termmeta table.
+		$term_id = $term->term_id;
+
+		// Store old category id.
+		if ( ! empty( $row[ 'id' ] ) ) {
+			$old_category_id = $row[ 'id' ];
+			update_term_meta( $term_id, '_old_category_id', $old_category_id );
+		}
+
+		// Store category data.
+		$legacy_category_data = $row;
+		unset( $legacy_category_data[ 'id' ] );
+		update_term_meta( $term_id, '_legacy_category_data', $legacy_category_data );
 	}
 }
