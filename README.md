@@ -34,6 +34,7 @@ Some common parameters for migration commands are as below.
 
 ### Available Migration Commands
 
--   wp ms-migrate-posts migrate
--   wp ms-migrate-users migrate
 -   wp ms-migrate-categories migrate
+-   wp ms-migrate-users migrate
+-   wp ms-migrate-posts migrate
+-   wp ms-migrate cleanup

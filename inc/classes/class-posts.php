@@ -12,8 +12,8 @@ namespace MS\Migration\Inc;
  */
 class Posts extends Migrate {
 	/**
-		* Article table name.
-		*/
+	 * Article table name.
+	*/
 	const ARTICLES_TABLE = 'articles';
 
 	/**

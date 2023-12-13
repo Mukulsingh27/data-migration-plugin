@@ -436,8 +436,7 @@ class Migrate {
 	 * Get all available categories for posts.
 	 */
 	protected function fetch_categories() {
-
-		$this->write_log( 'Fetching all categories' );
+		$this->write_log( __( 'Fetching all categories', 'ms-migration' ) );
 
 		$categories = get_terms(
 			[
@@ -463,8 +462,7 @@ class Migrate {
 	 * Get all available WP users.
 	 */
 	protected function fetch_users() {
-
-		$this->write_log( 'Fetching all users' );
+		$this->write_log( __( 'Fetching all users', 'ms-migration' ) );
 
 		$users = get_users(
 			[

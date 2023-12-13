@@ -104,3 +104,15 @@ Migration Result: Total 0 number of posts which were updated
 Migration Result: Total 0 number of posts which were skipped
 Migration Result: Total 0 number of posts which were failed
 Total time taken by this migration script: 1 second
+
+Article Data Cleanup!
+Total 50 records deleted for _legacy_article_data meta!
+Total 100 records deleted for _old_article_id meta!
+Category Data Cleanup!
+Total 10 records deleted for _legacy_category_data meta!
+Total 20 records deleted for _old_category_id meta!
+User Data Cleanup!
+Total 10 records deleted for _legacy_user_data meta!
+Total 20 records deleted for _old_user_id meta!
+
+Success: Total time taken by this cleanup script: 10 seconds

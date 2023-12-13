@@ -34,7 +34,7 @@ class Cleanup extends Migrate {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *      wp ms-migrate cleanup
+	 *      wp ms-migrate cleanup --dry-run=false --log-file=./log.txt
 	 *
 	 * @subcommand cleanup
 	 *
