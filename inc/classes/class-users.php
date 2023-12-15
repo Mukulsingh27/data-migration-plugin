@@ -109,10 +109,10 @@ class Users extends Migrate {
 		$this->extract_args( $assoc_args );
 
 		// Offset for the query.
-		$offset = ! empty( $assoc_args[ 'offset' ] ? intval( $assoc_args[ 'offset' ] ) : 0 );
+		$offset = ! empty( $assoc_args[ 'offset' ] ) ? intval( $assoc_args[ 'offset' ] ) : 0;
 
 		// Batch size for the query.
-		$batch  = ! empty( $assoc_args['batch'] ) ? intval( $assoc_args['batch'] ) : 200;
+		$batch  = ! empty( $assoc_args[ 'batch' ] ) ? intval( $assoc_args[ 'batch' ] ) : 200;
 
 		// Start migration.
 		$this->start_migration();
@@ -243,7 +243,7 @@ class Users extends Migrate {
 		$user_id = $this->user_exists( $user[ 'email' ] );
 
 		if ( $this->dry_run ) {
-			if ( 0 !== $user_id ) {
+			if ( ! empty( $user_id ) ) {
 				if ( ! $this->duplicate_user ) {
 					$this->total_skipped++;
 				}
@@ -269,6 +269,22 @@ class Users extends Migrate {
 				);
 			}
 			return;
+		} else {
+			// if user already exists then skip.
+			if ( ! empty( $user_id ) ) {
+				if ( ! $this->duplicate_user ) {
+					$this->total_skipped++;
+				}
+
+				$this->success(
+					sprintf(
+						__( 'Old User ID:%d user %s skipped!', 'ms-migration' ),
+						$user[ 'id' ],
+						$user_display_name
+					)
+				);
+				return;
+			}
 		}
 
 		// Insert user.
@@ -286,7 +302,7 @@ class Users extends Migrate {
 	private function insert_user( array $user, int $user_id = null ) {
 		$user_login = substr( $user[ 'user_login' ], 0, 60);
 
-		// If user login is empty or already exists then create new user login with first name, last name and user id.
+		// If user login is empty or already exists then create new user login with first name, last name.
 		if ( empty( $user_login ) || username_exists( $user_login ) ) {
 			if ( ! empty( $user[ 'first_name' ] ) ) {
 				$user_login = htmlspecialchars( strtolower( $user[ 'first_name' ] ) ) . '-';
@@ -309,7 +325,7 @@ class Users extends Migrate {
 			'display_name'    => trim( $display_name ),
 			'first_name'      => $user[ 'first_name' ] ?? null,
 			'last_name'       => $user[ 'last_name' ] ?? null,
-			'role'            => $this->handle_user_roles( $user[ 'role' ] ?? null ),
+			'role'            => $user[ 'role' ] ?? null,
 			'user_pass'       => 'password', // Passwords are not migrated.
 			'meta_input'      => [
 				'_legacy_user_data' => $user,
@@ -348,6 +364,7 @@ class Users extends Migrate {
 					$display_name
 				)
 			);
+			return;
 		} else {
 			if ( ! $this->duplicate_user ) {
 				$this->total_added++;
@@ -388,11 +405,12 @@ class Users extends Migrate {
 	private function get_users( int $offset, int $batch ) : array {
 		// Query to get users.
 		$query = sprintf(
-			'SELECT users.* FROM %s ORDER BY id ASC LIMIT %d OFFSET %d',
+			'SELECT * FROM %s LIMIT %d OFFSET %d',
 			self::USERS_TABLE,
 			$batch,
 			$offset
 		);
+
 		$users = $this->get_sql_server_data( $query );
 
 		return $users;
@@ -433,30 +451,5 @@ class Users extends Migrate {
 
 		$this->user_emails[] = $user_email;
 		return 0;
-	}
-
-	/**
-	 * Handle user roles.
-	 * 
-	 * @param string $role Role.
-	 * 
-	 * @return string
-	 */
-	private function handle_user_roles( string $role ) : string {
-		// Default roles.
-		$default_roles = [
-			'administrator',
-			'editor',
-			'author',
-			'contributor',
-			'subscriber',
-		];
-
-		// Check if role is in default roles.
-		if( in_array( $role, $default_roles, true ) ) {
-			return $role;
-		}
-
-		return 'subscriber';
 	}
 }

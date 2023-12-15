@@ -94,10 +94,10 @@ class Categories extends Migrate {
 		$this->extract_args( $assoc_args );
 
 		// Offset for the query.
-		$offset = ! empty( $assoc_args[ 'offset' ] ? intval( $assoc_args[ 'offset' ] ) : 0 );
+		$offset = ! empty( $assoc_args[ 'offset' ] ) ? intval( $assoc_args[ 'offset' ] ) : 0;
 
 		// Batch size for the query.
-		$batch  = ! empty( $assoc_args['batch'] ) ? intval( $assoc_args['batch'] ) : 200;
+		$batch  = ! empty( $assoc_args[ 'batch' ] ) ? intval( $assoc_args[ 'batch' ] ) : 200;
 
 		// Start migration.
 		$this->start_migration();
@@ -111,7 +111,7 @@ class Categories extends Migrate {
 		}
 
 		// Print starting migration script.
-		$this->write_log(__( 'Starting migration of categories...', 'ms-migration' ) );
+		$this->write_log( __( 'Starting migration of categories...', 'ms-migration' ) );
 
 		do {
 			$count = 0;
@@ -206,13 +206,23 @@ class Categories extends Migrate {
 		// Flush cache.
 		wp_cache_flush();
 
-		// Store previous category id and data into term meta table.
-		$this->store_category_meta( $row );
-
-		// Check if category already exists.
+		// Get term id.
 		$term = get_term_by( 'name', $row['name'], 'category' );
 
 		if ( $term ) {
+			// Store previous category id and data into meta table.
+			$term_id = $term->term_id;
+
+			// Store old category id.
+			if ( ! empty( $row[ 'id' ] ) ) {
+				update_term_meta( $term_id, '_old_category_id', $row[ 'id' ] );
+			}
+
+			// Store category data.
+			$legacy_category_data = $row;
+			unset( $legacy_category_data[ 'id' ] );
+			update_term_meta( $term_id, '_legacy_category_data', $legacy_category_data );
+
 			if ( ! empty( $this->dry_run ) ) {
 				$this->write_log(
 					sprintf(
@@ -299,7 +309,7 @@ class Categories extends Migrate {
 	private function get_categories( int $offset, int $batch ) : array {
 		// Query to get categories.
 		$query = sprintf(
-			'SELECT categories.* FROM %s ORDER BY id ASC LIMIT %d OFFSET %d',
+			'SELECT * FROM %s LIMIT %d OFFSET %d',
 			self::CATEGORIES_TABLE,
 			$batch,
 			$offset
@@ -307,45 +317,5 @@ class Categories extends Migrate {
 		$categories = $this->get_sql_server_data( $query );
 
 		return $categories;
-	}
-
-	/**
-	 * Store category meta.
-	 *
-	 * @param array $row $row data.
-	 *
-	 * @return void
-	 */
-	private function store_category_meta( array $row ): void {
-		// Flush cache.
-		wp_cache_flush();
-
-		// Get term id.
-		$term = get_term_by( 'name', $row['name'], 'category' );
-
-		if ( ! $term ) {
-			$this->warning(
-				sprintf(
-					__( 'Old Category ID:%d category %s not found!', 'ms-migration' ),
-					$row[ 'id' ],
-					$row[ 'name' ]
-				)
-			);
-			return;
-		}
-
-		// Store previous category id and data into wp_termmeta table.
-		$term_id = $term->term_id;
-
-		// Store old category id.
-		if ( ! empty( $row[ 'id' ] ) ) {
-			$old_category_id = $row[ 'id' ];
-			update_term_meta( $term_id, '_old_category_id', $old_category_id );
-		}
-
-		// Store category data.
-		$legacy_category_data = $row;
-		unset( $legacy_category_data[ 'id' ] );
-		update_term_meta( $term_id, '_legacy_category_data', $legacy_category_data );
 	}
 }

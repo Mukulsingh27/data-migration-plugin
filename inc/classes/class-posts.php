@@ -108,10 +108,10 @@ class Posts extends Migrate {
 		$this->extract_args( $assoc_args );
 
 		// Offset for the query.
-		$offset = ! empty( $assoc_args[ 'offset' ] ? intval( $assoc_args[ 'offset' ] ) : 0 );
+		$offset = ! empty( $assoc_args[ 'offset' ] ) ? intval( $assoc_args[ 'offset' ] ) : 0;
 
 		// Batch size for the query.
-		$batch  = ! empty( $assoc_args['batch'] ) ? intval( $assoc_args['batch'] ) : 200;
+		$batch  = ! empty( $assoc_args[ 'batch' ] ) ? intval( $assoc_args[ 'batch' ] ) : 200;
 
 		// Fetch users and categories.
 		$this->fetch_users();
@@ -240,23 +240,24 @@ class Posts extends Migrate {
 			'post_modified' => ! empty( $row[ 'updated' ] ) ? $row[ 'updated' ] : '',
 			'post_date'     => ! empty( $row[ 'added' ] ) ? $row[ 'added' ] : '',
 			'post_content'  => ! empty( $row[ 'html' ] ) ? $row[ 'html' ] : '',
-			'post_type'     => isset( $row[ 'type' ] ) ? $row[ 'type' ] : 'post',
+			'post_type'     => 'post',
+			'post_status'   => 'publish',
 		];
 
 		// Assign Category.
 		if ( ! empty( $row[ 'category' ] ) ) {
-			$post_data['post_category'][] = $this->categories[ intval( $row['category'] ) ];
+			$post_data[ 'post_category' ][] = $this->categories[ intval( $row['category'] ) ];
 		}
 
 		// Assign Author.
-		if ( ! empty( $row['author'] ) ) {
-			$post_data['post_author'] = $this->users[ intval( $row['author'] ) ];
+		if ( ! empty( $row[ 'author' ] ) ) {
+			$post_data[ 'post_author' ] = $this->users[ intval( $row['author'] ) ];
 		}
 
 		// Store legacy post data.
-		$post_data['meta_input'] = [
+		$post_data[ 'meta_input' ] = [
 			'_legacy_article_data' => $row,
-			'_old_article_id'      => $row['id'],
+			'_old_article_id'      => $row[ 'id' ],
 		];
 
 		// Check already exists post.
@@ -279,13 +280,6 @@ class Posts extends Migrate {
 		} else {
 			$post_data[ 'import_id' ] = $row[ 'id' ];
 		}
-
-		// Post status
-		$post_data[ 'post_status' ] = match ( $row[ 'status' ] ) {
-			'Draft'  => 'draft',
-			'Trash'  => 'trash',
-			default  => 'publish', // published.
-		};
 
 		if ( $this->dry_run ) {
 			$this->write_log(
@@ -346,7 +340,7 @@ class Posts extends Migrate {
 	private function get_articles( int $offset, int $batch ) : array {
 		// Query to get articles.
 		$query = sprintf(
-			'SELECT articles.* FROM %s ORDER BY id ASC LIMIT %d OFFSET %d',
+			'SELECT * FROM %s LIMIT %d OFFSET %d',
 			self::ARTICLES_TABLE,
 			$batch,
 			$offset

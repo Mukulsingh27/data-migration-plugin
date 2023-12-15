@@ -138,7 +138,7 @@ class Migrate {
 
 		// Log message to log file if a log file.
 		if (! empty( $this->log_file) ) {
-		 file_put_contents( $this->log_file, $message_prefix . $message . "\n", FILE_APPEND );
+			file_put_contents( $this->log_file, $message_prefix . $message . "\n", FILE_APPEND );
 		}
 
 		if ( $this->logs ) {
@@ -217,13 +217,13 @@ class Migrate {
 		if (! defined( 'SAVEQUERIES' ) ) {
 			define( 'SAVEQUERIES', false );
 		} elseif ( true === SAVEQUERIES ) {
-			\WP_CLI::error( 'Disable WordPress Debug plugins like develop query monitor etc.' );
+			\WP_CLI::error( __( 'Disable WordPress Debug plugins like develop query monitor etc.', 'ms-migration' ) );
 		}
 
-		if (! defined('WP_POST_REVISIONS') ) {
-			define('WP_POST_REVISIONS', false);
+		if (! defined( 'WP_POST_REVISIONS' ) ) {
+			define( 'WP_POST_REVISIONS', false );
 		} elseif ( true === WP_POST_REVISIONS ) {
-			\WP_CLI::error( 'Disable Post Revisions to speed up migration script & avoid unnecessary post creation.' );
+			\WP_CLI::error( __( 'Disable Post Revisions to speed up migration script & avoid unnecessary post creation.', 'ms-migration' ) );
 		}
 
 		if (! defined( 'WP_IMPORTING' ) ) {
@@ -248,7 +248,7 @@ class Migrate {
 		$this->connection->close();
 
 		// If Success indicate on CLI.
-		\WP_CLI::success('Connection closed successfully!');
+		\WP_CLI::success( __( 'Connection closed successfully!', 'ms-migration' ) );
 
 		wp_cache_flush();
 
@@ -286,7 +286,7 @@ class Migrate {
 		$dbpass   = defined( 'MS_MIGRATION_USER_PASS' ) ? MS_MIGRATION_USER_PASS : ''; // User Password.
 
 		// Establishes the connection.
-		$this->connection = new \mysqli($server_name, $username, $dbpass, $dbname);
+		$this->connection = new \mysqli( $server_name, $username, $dbpass, $dbname );
 
 		// If Success indicate on CLI.
 		if ( ! $this->connection->connect_errno ) {
@@ -319,7 +319,6 @@ class Migrate {
 
 			// Error handling.
 			if ( false === $this->statement ) {
-
 				$this->write_log( print_r( $this->connection->error, true ) );
 
 				// Only try 3 times to reconnect.
@@ -328,7 +327,6 @@ class Migrate {
 					$trial++;
 					$this->write_log( 'Lets try again!' );
 					$this->get_sql_server_data( $query, $single, $trial );
-
 				} elseif ( 4 === $trial ) {
 					$this->write_log( 'Connection refused too many times. Please run command again from last Offset.' );
 					exit;
@@ -344,7 +342,6 @@ class Migrate {
 		}
 
 		$this->statement->free_result();
-
 		return $rows;
 	}
 
@@ -368,7 +365,7 @@ class Migrate {
 			$wp_object_cache->cache          = [];
 
 			if ( method_exists($wp_object_cache, '__remoteset' ) ) {
-				$wp_object_cache->__remoteset(); // important
+				$wp_object_cache->__remoteset();
 			}
 		}
 	}
