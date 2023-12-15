@@ -134,6 +134,7 @@ class Posts extends Migrate {
 		if ( $batch_limit !== -1 ) {
 			$total_count = $batch_limit * $batch_size;
 		} else {
+			// Get total posts.
 			$total_count = $this->get_total_articles();
 		}
 
@@ -146,6 +147,7 @@ class Posts extends Migrate {
 		// Print starting migration script.
 		$this->write_log( __( 'Starting migration of articles...', 'ms-migration' ) );
 
+		// Initialize variables.
 		$continue      = true;
 		$batch_counter = 0;
 		$page_counter  = $page; 
