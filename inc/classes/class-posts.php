@@ -73,11 +73,21 @@ class Posts extends Migrate {
 	 *
 	 * [--offset=<number>]
 	 * : starting from offset
-	 * ---
+	 * --- 
 	 * default: 0
-	 * 
+	 *
+	 * [--page=<number>]
+	 * : starting page number
+	 * ---
+	 * default: 1
+	 *
 	 * [--batch=<number>]
-	 * : Number of rows to process at a time.
+	 * : limit to batches
+	 * ---
+	 * default: -1
+	 *
+	 * [--size=<number>]
+	 * : batch size
 	 * ---
 	 * default: 200
 	 *
@@ -94,7 +104,7 @@ class Posts extends Migrate {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *      wp ms-migrate-posts migrate --offset=0 --batch=200 --dry-run=false --log-file=./log.txt
+	 *      wp ms-migrate-posts migrate --offset=0 --page=1 --size=5 --batch=2 --dry-run=false --log-file=./log.txt
 	 *
 	 * @subcommand migrate
 	 *
@@ -107,11 +117,11 @@ class Posts extends Migrate {
 
 		$this->extract_args( $assoc_args );
 
-		// Offset for the query.
-		$offset = ! empty( $assoc_args[ 'offset' ] ) ? intval( $assoc_args[ 'offset' ] ) : 0;
-
-		// Batch size for the query.
-		$batch  = ! empty( $assoc_args[ 'batch' ] ) ? intval( $assoc_args[ 'batch' ] ) : 200;
+		// Get arguments.
+		$offset      = ( ! empty( $assoc_args[ 'offset' ] ) ? intval( $assoc_args[ 'offset' ] ) : 0 );
+		$batch_size  = ( ! empty( $assoc_args[ 'size' ] ) ? intval( $assoc_args[ 'size' ] ) : 200 );
+		$batch_limit = ( ! empty( $assoc_args[ 'batch' ] ) ? intval( $assoc_args[ 'batch' ] ) : -1 );
+		$page        = ( ! empty( $assoc_args[ 'page' ] ) ? intval( $assoc_args[ 'page' ] ) : 1 );
 
 		// Fetch users and categories.
 		$this->fetch_users();
@@ -120,8 +130,12 @@ class Posts extends Migrate {
 		// Start migration.
 		$this->start_migration();
 
-		// Get total articles.
-		$total_count = $this->get_total_articles();
+		// Total posts to process based on batch size.
+		if ( $batch_limit !== -1 ) {
+			$total_count = $batch_limit * $batch_size;
+		} else {
+			$total_count = $this->get_total_articles();
+		}
 
 		// Progressbar.
 		if ( empty( $this->logs ) ) {
@@ -132,10 +146,25 @@ class Posts extends Migrate {
 		// Print starting migration script.
 		$this->write_log( __( 'Starting migration of articles...', 'ms-migration' ) );
 
+		$continue      = true;
+		$batch_counter = 0;
+		$page_counter  = $page; 
+
+		// Calculate Offset based on page number.
+		if ( $batch_limit !== -1 ) {
+			$offset = ( $page - 1 ) * $batch_size;
+		}
+
 		do {
 			$count = 0;
-			$articles = $this->get_articles( $offset, $batch );
 
+			// Print page number.
+			$this->write_log( sprintf( PHP_EOL . '---------Processing "post" Page %d - Offset %d ----------' . PHP_EOL, $page_counter, $offset ) );
+
+			// Get articles.
+			$articles = $this->get_articles( $offset, $batch_size );
+
+			// Process articles.
 			foreach ( $articles as $article ) {
 				if (! empty( $progress ) && empty( $this->logs ) ) {
 					$progress->tick();
@@ -149,14 +178,25 @@ class Posts extends Migrate {
 			$this->total_found += $count;
 
 			// offset increment.
-			$offset += $batch;
+			$offset += $batch_size;
 
 			// Sleep after every batch.
 			sleep( 1 );
 
 			$this->stop_the_insanity();
 
-		} while ( ! empty( $articles ) && $count === $batch );
+			// Process batch limit.
+			if ( $batch_limit !== -1 ) {
+				$batch_counter++;
+				if ( $batch_counter === $batch_limit ) {
+					$continue = false;
+				}
+			} else {
+				$continue = ( $count === $batch_size );
+			}
+
+			$page_counter++;
+		} while ( ! empty( $articles ) && $continue );
 
 		// Add a blank line to separate Overall result.
 		$this->write_log( '' );

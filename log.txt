@@ -1,68 +1,23 @@
-Starting migration of categories...
-Success: Old category ID:1 WP term ID:65 category sed inserted. Updating meta...
-ID:2 sed category already exists, therefore skipped
-Success: Old category ID:3 WP term ID:66 category magnam inserted. Updating meta...
-Success: Old category ID:4 WP term ID:67 category dolores inserted. Updating meta...
-Success: Old category ID:5 WP term ID:68 category eligendi inserted. Updating meta...
-Success: Old category ID:6 WP term ID:69 category totam inserted. Updating meta...
-Success: Old category ID:7 WP term ID:70 category a inserted. Updating meta...
-Success: Old category ID:8 WP term ID:71 category qui inserted. Updating meta...
-Success: Old category ID:9 WP term ID:72 category dolor inserted. Updating meta...
-Success: Old category ID:10 WP term ID:73 category occaecati inserted. Updating meta...
+Fetching all users
+Fetched 10 users
+Fetching all categories
+Fetched 9 categories
+Starting migration of articles...
 
-Migration Result: There are total 10 number of categories
-Migration Result: Total 9 number of categories which were added
-Migration Result: Total 1 number of categories which were skipped
-Migration Result: Total 0 number of categories which were failed
-Total time taken by this migration script: 1 second
-Starting migration of categories...
-ID:1 sed category already exists, therefore skipped
-ID:2 sed category already exists, therefore skipped
-ID:3 magnam category already exists, therefore skipped
-ID:4 dolores category already exists, therefore skipped
-ID:5 eligendi category already exists, therefore skipped
-ID:6 totam category already exists, therefore skipped
-ID:7 a category already exists, therefore skipped
-ID:8 qui category already exists, therefore skipped
-ID:9 dolor category already exists, therefore skipped
-ID:10 occaecati category already exists, therefore skipped
+---------Processing "post" Page 10 - Offset 45 ----------
 
-Migration Result: There are total 10 number of categories
-Migration Result: Total 0 number of categories which were added
-Migration Result: Total 10 number of categories which were skipped
-Migration Result: Total 0 number of categories which were failed
-Total time taken by this migration script: 1 second
-Starting migration of categories...
-Success: Old category ID:1 WP term ID:74 category sed inserted. Updating meta...
-ID:2 sed category already exists, therefore skipped
-Success: Old category ID:3 WP term ID:75 category magnam inserted. Updating meta...
-Success: Old category ID:4 WP term ID:76 category dolores inserted. Updating meta...
-Success: Old category ID:5 WP term ID:77 category eligendi inserted. Updating meta...
-Success: Old category ID:6 WP term ID:78 category totam inserted. Updating meta...
-Success: Old category ID:7 WP term ID:79 category a inserted. Updating meta...
-Success: Old category ID:8 WP term ID:80 category qui inserted. Updating meta...
-Success: Old category ID:9 WP term ID:81 category dolor inserted. Updating meta...
-Success: Old category ID:10 WP term ID:82 category occaecati inserted. Updating meta...
+Success: Successfully Migrated Post 47.
+Success: Successfully Migrated Post 48.
+Success: Successfully Migrated Post 49.
+Success: Successfully Migrated Post 50.
+Success: Successfully Migrated Post 51.
 
-Migration Result: There are total 10 number of categories
-Migration Result: Total 9 number of categories which were added
-Migration Result: Total 1 number of categories which were skipped
-Migration Result: Total 0 number of categories which were failed
-Total time taken by this migration script: 1 second
-Starting migration of categories...
-ID:1 sed category already exists, therefore skipped
-ID:2 sed category already exists, therefore skipped
-ID:3 magnam category already exists, therefore skipped
-ID:4 dolores category already exists, therefore skipped
-ID:5 eligendi category already exists, therefore skipped
-ID:6 totam category already exists, therefore skipped
-ID:7 a category already exists, therefore skipped
-ID:8 qui category already exists, therefore skipped
-ID:9 dolor category already exists, therefore skipped
-ID:10 occaecati category already exists, therefore skipped
+---------Processing "post" Page 11 - Offset 50 ----------
 
-Migration Result: There are total 10 number of categories
-Migration Result: Total 0 number of categories which were added
-Migration Result: Total 10 number of categories which were skipped
-Migration Result: Total 0 number of categories which were failed
-Total time taken by this migration script: 2 seconds
+
+Migration Result: There are total 5 number of posts
+Migration Result: Total 5 number of posts which were added
+Migration Result: Total 0 number of posts which were updated
+Migration Result: Total 0 number of posts which were skipped
+Migration Result: Total 0 number of posts which were failed
+Total time taken by this migration script: 3 seconds
