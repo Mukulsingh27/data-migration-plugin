@@ -1,118 +1,68 @@
 Starting migration of categories...
-Warning: Old Category ID:1 category sed not found!
-Success: Old category ID:1 WP term ID:47 category sed inserted. Updating meta...
+Success: Old category ID:1 WP term ID:65 category sed inserted. Updating meta...
 ID:2 sed category already exists, therefore skipped
-Warning: Old Category ID:3 category magnam not found!
-Success: Old category ID:3 WP term ID:48 category magnam inserted. Updating meta...
-Warning: Old Category ID:4 category dolores not found!
-Success: Old category ID:4 WP term ID:49 category dolores inserted. Updating meta...
-Warning: Old Category ID:5 category eligendi not found!
-Success: Old category ID:5 WP term ID:50 category eligendi inserted. Updating meta...
-Warning: Old Category ID:6 category totam not found!
-Success: Old category ID:6 WP term ID:51 category totam inserted. Updating meta...
-Warning: Old Category ID:7 category a not found!
-Success: Old category ID:7 WP term ID:52 category a inserted. Updating meta...
-Warning: Old Category ID:8 category qui not found!
-Success: Old category ID:8 WP term ID:53 category qui inserted. Updating meta...
-Warning: Old Category ID:9 category dolor not found!
-Success: Old category ID:9 WP term ID:54 category dolor inserted. Updating meta...
-Warning: Old Category ID:10 category occaecati not found!
-Success: Old category ID:10 WP term ID:55 category occaecati inserted. Updating meta...
+Success: Old category ID:3 WP term ID:66 category magnam inserted. Updating meta...
+Success: Old category ID:4 WP term ID:67 category dolores inserted. Updating meta...
+Success: Old category ID:5 WP term ID:68 category eligendi inserted. Updating meta...
+Success: Old category ID:6 WP term ID:69 category totam inserted. Updating meta...
+Success: Old category ID:7 WP term ID:70 category a inserted. Updating meta...
+Success: Old category ID:8 WP term ID:71 category qui inserted. Updating meta...
+Success: Old category ID:9 WP term ID:72 category dolor inserted. Updating meta...
+Success: Old category ID:10 WP term ID:73 category occaecati inserted. Updating meta...
 
 Migration Result: There are total 10 number of categories
 Migration Result: Total 9 number of categories which were added
 Migration Result: Total 1 number of categories which were skipped
 Migration Result: Total 0 number of categories which were failed
 Total time taken by this migration script: 1 second
+Starting migration of categories...
+ID:1 sed category already exists, therefore skipped
+ID:2 sed category already exists, therefore skipped
+ID:3 magnam category already exists, therefore skipped
+ID:4 dolores category already exists, therefore skipped
+ID:5 eligendi category already exists, therefore skipped
+ID:6 totam category already exists, therefore skipped
+ID:7 a category already exists, therefore skipped
+ID:8 qui category already exists, therefore skipped
+ID:9 dolor category already exists, therefore skipped
+ID:10 occaecati category already exists, therefore skipped
 
-Starting Users Migration
-Success: Old user ID:1 user Madison Schoen added!
-Success: Old user ID:2 user Larry Heidenreich added!
-Success: Old user ID:3 user Kaycee Schaefer added!
-Success: Old user ID:4 user Barry Spencer added!
-Success: Old user ID:5 user Libbie Wiegand added!
-Success: Old user ID:6 user Sydnee Franecki added!
-Success: Old user ID:7 user Foster Feeney added!
-Success: Old user ID:8 user Lexus Herman added!
-Success: Old user ID:9 user Amina Cruickshank added!
-Success: Old user ID:10 user Lenna Kuhic added!
-
-Migration Result: Total 10 number of users which were added
-Migration Result: Total 0 number of users which were skipped
-Migration Result: Total 0 number of users which were failed
-Total time taken by this migration script: 2 seconds
-
-Fetching all users
-Fetched 10 users
-Fetching all categories
-Fetched 1 categories
-Starting migration of articles...
-Success: Successfully Migrated Post 2.
-Success: Successfully Migrated Post 3.
-Success: Successfully Migrated Post 4.
-Success: Successfully Migrated Post 5.
-Success: Successfully Migrated Post 6.
-Success: Successfully Migrated Post 7.
-Success: Successfully Migrated Post 8.
-Success: Successfully Migrated Post 9.
-Success: Successfully Migrated Post 10.
-Success: Successfully Migrated Post 11.
-Success: Successfully Migrated Post 12.
-Success: Successfully Migrated Post 13.
-Success: Successfully Migrated Post 14.
-Success: Successfully Migrated Post 15.
-Success: Successfully Migrated Post 16.
-Success: Successfully Migrated Post 17.
-Success: Successfully Migrated Post 18.
-Success: Successfully Migrated Post 19.
-Success: Successfully Migrated Post 20.
-Success: Successfully Migrated Post 21.
-Success: Successfully Migrated Post 22.
-Success: Successfully Migrated Post 23.
-Success: Successfully Migrated Post 24.
-Success: Successfully Migrated Post 25.
-Success: Successfully Migrated Post 26.
-Success: Successfully Migrated Post 27.
-Success: Successfully Migrated Post 28.
-Success: Successfully Migrated Post 29.
-Success: Successfully Migrated Post 30.
-Success: Successfully Migrated Post 31.
-Success: Successfully Migrated Post 32.
-Success: Successfully Migrated Post 33.
-Success: Successfully Migrated Post 34.
-Success: Successfully Migrated Post 35.
-Success: Successfully Migrated Post 36.
-Success: Successfully Migrated Post 37.
-Success: Successfully Migrated Post 38.
-Success: Successfully Migrated Post 39.
-Success: Successfully Migrated Post 40.
-Success: Successfully Migrated Post 41.
-Success: Successfully Migrated Post 42.
-Success: Successfully Migrated Post 43.
-Success: Successfully Migrated Post 44.
-Success: Successfully Migrated Post 45.
-Success: Successfully Migrated Post 46.
-Success: Successfully Migrated Post 47.
-Success: Successfully Migrated Post 48.
-Success: Successfully Migrated Post 49.
-Success: Successfully Migrated Post 50.
-Success: Successfully Migrated Post 51.
-
-Migration Result: There are total 50 number of posts
-Migration Result: Total 50 number of posts which were added
-Migration Result: Total 0 number of posts which were updated
-Migration Result: Total 0 number of posts which were skipped
-Migration Result: Total 0 number of posts which were failed
+Migration Result: There are total 10 number of categories
+Migration Result: Total 0 number of categories which were added
+Migration Result: Total 10 number of categories which were skipped
+Migration Result: Total 0 number of categories which were failed
 Total time taken by this migration script: 1 second
+Starting migration of categories...
+Success: Old category ID:1 WP term ID:74 category sed inserted. Updating meta...
+ID:2 sed category already exists, therefore skipped
+Success: Old category ID:3 WP term ID:75 category magnam inserted. Updating meta...
+Success: Old category ID:4 WP term ID:76 category dolores inserted. Updating meta...
+Success: Old category ID:5 WP term ID:77 category eligendi inserted. Updating meta...
+Success: Old category ID:6 WP term ID:78 category totam inserted. Updating meta...
+Success: Old category ID:7 WP term ID:79 category a inserted. Updating meta...
+Success: Old category ID:8 WP term ID:80 category qui inserted. Updating meta...
+Success: Old category ID:9 WP term ID:81 category dolor inserted. Updating meta...
+Success: Old category ID:10 WP term ID:82 category occaecati inserted. Updating meta...
 
-Article Data Cleanup!
-Total 50 records deleted for _legacy_article_data meta!
-Total 100 records deleted for _old_article_id meta!
-Category Data Cleanup!
-Total 10 records deleted for _legacy_category_data meta!
-Total 20 records deleted for _old_category_id meta!
-User Data Cleanup!
-Total 10 records deleted for _legacy_user_data meta!
-Total 20 records deleted for _old_user_id meta!
+Migration Result: There are total 10 number of categories
+Migration Result: Total 9 number of categories which were added
+Migration Result: Total 1 number of categories which were skipped
+Migration Result: Total 0 number of categories which were failed
+Total time taken by this migration script: 1 second
+Starting migration of categories...
+ID:1 sed category already exists, therefore skipped
+ID:2 sed category already exists, therefore skipped
+ID:3 magnam category already exists, therefore skipped
+ID:4 dolores category already exists, therefore skipped
+ID:5 eligendi category already exists, therefore skipped
+ID:6 totam category already exists, therefore skipped
+ID:7 a category already exists, therefore skipped
+ID:8 qui category already exists, therefore skipped
+ID:9 dolor category already exists, therefore skipped
+ID:10 occaecati category already exists, therefore skipped
 
-Success: Total time taken by this cleanup script: 10 seconds
+Migration Result: There are total 10 number of categories
+Migration Result: Total 0 number of categories which were added
+Migration Result: Total 10 number of categories which were skipped
+Migration Result: Total 0 number of categories which were failed
+Total time taken by this migration script: 2 seconds
