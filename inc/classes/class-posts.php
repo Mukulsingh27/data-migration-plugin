@@ -73,7 +73,7 @@ class Posts extends Migrate {
 	 *
 	 * [--offset=<number>]
 	 * : starting from offset
-	 * --- 
+	 * ---
 	 * default: 0
 	 *
 	 * [--page=<number>]
@@ -118,10 +118,10 @@ class Posts extends Migrate {
 		$this->extract_args( $assoc_args );
 
 		// Get arguments.
-		$offset      = ( ! empty( $assoc_args[ 'offset' ] ) ? intval( $assoc_args[ 'offset' ] ) : 0 );
-		$batch_size  = ( ! empty( $assoc_args[ 'size' ] ) ? intval( $assoc_args[ 'size' ] ) : 200 );
-		$batch_limit = ( ! empty( $assoc_args[ 'batch' ] ) ? intval( $assoc_args[ 'batch' ] ) : -1 );
-		$page        = ( ! empty( $assoc_args[ 'page' ] ) ? intval( $assoc_args[ 'page' ] ) : 1 );
+		$offset      = ( ! empty( $assoc_args['offset'] ) ? intval( $assoc_args['offset'] ) : 0 );
+		$batch_size  = ( ! empty( $assoc_args['size'] ) ? intval( $assoc_args['size'] ) : 200 );
+		$batch_limit = ( ! empty( $assoc_args['batch'] ) ? intval( $assoc_args['batch'] ) : -1 );
+		$page        = ( ! empty( $assoc_args['page'] ) ? intval( $assoc_args['page'] ) : 1 );
 
 		// Fetch users and categories.
 		$this->fetch_users();
@@ -131,7 +131,7 @@ class Posts extends Migrate {
 		$this->start_migration();
 
 		// Total posts to process based on batch size.
-		if ( $batch_limit !== -1 ) {
+		if ( -1 !== $batch_limit ) {
 			$total_count = $batch_limit * $batch_size;
 		} else {
 			// Get total posts.
@@ -141,7 +141,7 @@ class Posts extends Migrate {
 		// Progressbar.
 		if ( empty( $this->logs ) ) {
 			// Creating progressbar.
-			$progress = \WP_CLI\Utils\make_progress_bar( __( 'Articles Migration', 'ms-migration' ), $total_count, 10) ;
+			$progress = \WP_CLI\Utils\make_progress_bar( __( 'Articles Migration', 'ms-migration' ), $total_count, 10 );
 		}
 
 		// Print starting migration script.
@@ -150,10 +150,10 @@ class Posts extends Migrate {
 		// Initialize variables.
 		$continue      = true;
 		$batch_counter = 0;
-		$page_counter  = $page; 
+		$page_counter  = $page;
 
 		// Calculate Offset based on page number.
-		if ( $batch_limit !== -1 ) {
+		if ( -1 !== $batch_limit ) {
 			$offset = ( $page - 1 ) * $batch_size;
 		}
 
@@ -161,14 +161,21 @@ class Posts extends Migrate {
 			$count = 0;
 
 			// Print page number.
-			$this->write_log( sprintf( PHP_EOL . '---------Processing "post" Page %d - Offset %d ----------' . PHP_EOL, $page_counter, $offset ) );
+			$this->write_log(
+				sprintf(
+					// translators: %1$d: Page number, %2$d: Offset.
+					PHP_EOL . '---------Processing "post" Page %d - Offset %d ----------' . PHP_EOL,
+					$page_counter,
+					$offset
+				)
+			);
 
 			// Get articles.
 			$articles = $this->get_articles( $offset, $batch_size );
 
 			// Process articles.
 			foreach ( $articles as $article ) {
-				if (! empty( $progress ) && empty( $this->logs ) ) {
+				if ( ! empty( $progress ) && empty( $this->logs ) ) {
 					$progress->tick();
 				}
 
@@ -188,7 +195,7 @@ class Posts extends Migrate {
 			$this->stop_the_insanity();
 
 			// Process batch limit.
-			if ( $batch_limit !== -1 ) {
+			if ( -1 !== $batch_limit ) {
 				$batch_counter++;
 				if ( $batch_counter === $batch_limit ) {
 					$continue = false;
@@ -206,8 +213,9 @@ class Posts extends Migrate {
 		// Print total number of posts.
 		$this->write_log(
 			sprintf(
-				__( '%s: There are total %d number of posts', 'ms-migration' ),
-				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration') : __( 'Dry-Run Result', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of posts found.
+				__( '%1$s: There are total %2$d number of posts', 'ms-migration' ),
+				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_found
 			)
 		);
@@ -215,8 +223,9 @@ class Posts extends Migrate {
 		// Print total number of posts added.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of posts which were added', 'ms-migration' ),
-				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration') : __( 'Dry-Run Result', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of posts added.
+				__( '%1$s: Total %2$d number of posts which were added', 'ms-migration' ),
+				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_added
 			)
 		);
@@ -224,8 +233,9 @@ class Posts extends Migrate {
 		// Print total number of posts updated.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of posts which were updated', 'ms-migration' ),
-				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration') : __( 'Dry-Run Result', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of posts updated.
+				__( '%1$s: Total %2$d number of posts which were updated', 'ms-migration' ),
+				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_update
 			)
 		);
@@ -233,8 +243,9 @@ class Posts extends Migrate {
 		// Print total number of posts skipped.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of posts which were skipped', 'ms-migration' ),
-				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration') : __( 'Dry-Run Result', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of posts skipped.
+				__( '%1$s: Total %2$d number of posts which were skipped', 'ms-migration' ),
+				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_skipped
 			)
 		);
@@ -242,8 +253,9 @@ class Posts extends Migrate {
 		// Print total number of posts failed.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of posts which were failed', 'ms-migration' ),
-				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration') : __( 'Dry-Run Result', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of posts failed.
+				__( '%1$s: Total %2$d number of posts which were failed', 'ms-migration' ),
+				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_failed
 			),
 		);
@@ -251,8 +263,9 @@ class Posts extends Migrate {
 		// Print total time taken by the script.
 		$this->write_log(
 			sprintf(
+				// translators: %s: Total time taken by the script.
 				__( 'Total time taken by this migration script: %s', 'ms-migration' ),
-				human_time_diff($start_time, time())
+				human_time_diff( $start_time, time() )
 			)
 		);
 
@@ -278,56 +291,63 @@ class Posts extends Migrate {
 
 		// Post data.
 		$post_data = [
-			'post_title'    => ! empty( $row[ 'title' ] ) ? $row[ 'title' ] : '',
-			'post_modified' => ! empty( $row[ 'updated' ] ) ? $row[ 'updated' ] : '',
-			'post_date'     => ! empty( $row[ 'added' ] ) ? $row[ 'added' ] : '',
-			'post_content'  => ! empty( $row[ 'html' ] ) ? $row[ 'html' ] : '',
+			'post_title'    => ! empty( $row['title'] ) ? $row['title'] : '',
+			'post_modified' => ! empty( $row['updated'] ) ? $row['updated'] : '',
+			'post_date'     => ! empty( $row['added'] ) ? $row['added'] : '',
+			'post_content'  => ! empty( $row['html'] ) ? $row['html'] : '',
 			'post_type'     => 'post',
 			'post_status'   => 'publish',
 		];
 
 		// Assign Category.
-		if ( ! empty( $row[ 'category' ] ) ) {
-			$post_data[ 'post_category' ][] = $this->categories[ intval( $row['category'] ) ];
+		if ( ! empty( $row['category'] ) ) {
+			$post_data['post_category'][] = $this->categories[ intval( $row['category'] ) ];
 		}
 
 		// Assign Author.
-		if ( ! empty( $row[ 'author' ] ) ) {
-			$post_data[ 'post_author' ] = $this->users[ intval( $row['author'] ) ];
+		if ( ! empty( $row['author'] ) ) {
+			$post_data['post_author'] = $this->users[ intval( $row['author'] ) ];
 		}
 
 		// Store legacy post data.
-		$post_data[ 'meta_input' ] = [
+		$post_data['meta_input'] = [
 			'_legacy_article_data' => $row,
-			'_old_article_id'      => $row[ 'id' ],
+			'_old_article_id'      => $row['id'],
 		];
 
 		// Check already exists post.
-		$post_exists_data = get_post( $row[ 'id' ]);
+		$post_exists_data = get_post( $row['id'] );
 		$post_exists      = ! ( null === $post_exists_data );
 
 		if ( true === $post_exists ) {
 			// Check for update.
 			$old_updated_at = get_post_modified_time( 'Y-m-d H:i:s', true, $post_exists_data->ID );
 
-			if ( ! empty( $row[ 'updated' ] ) && $row[ 'updated' ] === $old_updated_at ) {
+			if ( ! empty( $row['updated'] ) && $row['updated'] === $old_updated_at ) {
 				// Same post.
-				$this->warning(sprintf(__( 'Post %d has already exists.', 'ms-migration' ), $row[ 'id' ] ) );
+				$this->warning(
+					sprintf(
+						// translators: %d: Post id.
+						__( 'Post %d has already exists.', 'ms-migration' ),
+						$row['id']
+					)
+				);
 				$this->write_log( '' );
 				$this->total_skipped++;
 				return;
 			}
 
-			$post_data[ 'ID' ] = $post_exists_data->ID;
+			$post_data['ID'] = $post_exists_data->ID;
 		} else {
-			$post_data[ 'import_id' ] = $row[ 'id' ];
+			$post_data['import_id'] = $row['id'];
 		}
 
 		if ( $this->dry_run ) {
 			$this->write_log(
 				sprintf(
+					// translators: %d: Post id.
 					__( 'Dry-run: ID:%d post will be migrated', 'ms-migration' ),
-					$row[ 'id' ]
+					$row['id']
 				)
 			);
 			$this->total_added++;
@@ -340,17 +360,31 @@ class Posts extends Migrate {
 			// remove added filter after post insertion.
 			remove_filter( 'wp_insert_post_data', [ $this, 'alter_modification_date' ], 10 );
 
-			if (is_wp_error( $post ) ) {
+			if ( is_wp_error( $post ) ) {
 				$this->warning( $post->get_error_message() );
 				$this->total_failed++;
 
 			} else {
-				if ( ! empty( $post_data[ 'ID' ] ) ) {
-					$this->success( sprintf( __( 'Successfully Updated %s %d.', 'ms-migration' ), $this->type, $post_data['ID'] ) );
+				if ( ! empty( $post_data['ID'] ) ) {
+					$this->success(
+						sprintf(
+							// translators: %1$s: Post type, %2$d: Post id.
+							__( 'Successfully Updated %1$s %2$d.', 'ms-migration' ),
+							$this->type,
+							$post_data['ID']
+						)
+					);
 					$this->total_update++;
 
 				} else {
-					$this->success( sprintf( __( 'Successfully Migrated %s %d.', 'ms-migration' ), $this->type, $post ) );
+					$this->success(
+						sprintf(
+							// translators: %1$s: Post type, %2$d: Post id.
+							__( 'Successfully Migrated %1$s %2$d.', 'ms-migration' ),
+							$this->type,
+							$post
+						)
+					);
 					$this->total_added++;
 				}
 			}
@@ -381,7 +415,7 @@ class Posts extends Migrate {
 	 */
 	private function get_articles( int $offset, int $batch ) : array {
 		// Query to get articles.
-		$query = sprintf(
+		$query    = sprintf(
 			'SELECT * FROM %s LIMIT %d OFFSET %d',
 			self::ARTICLES_TABLE,
 			$batch,

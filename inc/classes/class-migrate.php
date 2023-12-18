@@ -77,22 +77,22 @@ class Migrate {
 	protected function extract_args( $assoc_args ) {
 		$this->assoc_args = $assoc_args;
 
-		if (empty( $assoc_args ) ) {
+		if ( empty( $assoc_args ) ) {
 			return false;
 		}
 
-		if (! empty( $assoc_args[ 'log-file'] ) ) {
-			$this->log_file = $assoc_args[ 'log-file' ];
+		if ( ! empty( $assoc_args['log-file'] ) ) {
+			$this->log_file = $assoc_args['log-file'];
 		}
 
-		if (isset( $assoc_args[ 'logs' ]) ) {
-			$this->logs = empty( $assoc_args[ 'logs' ] ) || 'true' === $assoc_args[' logs' ];
+		if ( isset( $assoc_args['logs'] ) ) {
+			$this->logs = empty( $assoc_args['logs'] ) || 'true' === $assoc_args[' logs'];
 		} else {
 			$this->logs = false;
 		}
 
-		if (isset( $assoc_args[ 'dry-run' ] ) ) {
-			$this->dry_run = empty( $assoc_args[ 'dry-run' ] ) || 'true' === $assoc_args[ 'dry-run' ];
+		if ( isset( $assoc_args['dry-run'] ) ) {
+			$this->dry_run = empty( $assoc_args['dry-run'] ) || 'true' === $assoc_args['dry-run'];
 		} else {
 			$this->dry_run = true;
 		}
@@ -123,43 +123,43 @@ class Migrate {
 		// Message prefix for use in log file.
 		switch ( $message_type ) {
 
-		case -1:
-			$message_prefix = 'Error: ';
-			break;
+			case -1:
+				$message_prefix = 'Error: ';
+				break;
 
-		case 1:
-			$message_prefix = 'Success: ';
-			break;
+			case 1:
+				$message_prefix = 'Success: ';
+				break;
 
-		case 2:
-			$message_prefix = 'Warning: ';
-			break;
+			case 2:
+				$message_prefix = 'Warning: ';
+				break;
 		}
 
 		// Log message to log file if a log file.
-		if (! empty( $this->log_file) ) {
-			file_put_contents( $this->log_file, $message_prefix . $message . "\n", FILE_APPEND );
+		if ( ! empty( $this->log_file ) ) {
+			file_put_contents( $this->log_file, $message_prefix . $message . "\n", FILE_APPEND ); // phpcs:ignore
 		}
 
 		if ( $this->logs ) {
 			switch ( $message_type ) {
 
-			case -1:
-				\WP_CLI::error( $message );
-				break;
+				case -1:
+					\WP_CLI::error( $message );
+					break;
 
-			case 1:
-				\WP_CLI::success( $message );
-				break;
+				case 1:
+					\WP_CLI::success( $message );
+					break;
 
-			case 2:
-				\WP_CLI::warning( $message );
-				break;
+				case 2:
+					\WP_CLI::warning( $message );
+					break;
 
-			case 0:
-			default:
-				\WP_CLI::line( $message );
-				break;
+				case 0:
+				default:
+					\WP_CLI::line( $message );
+					break;
 			}
 		}
 	}
@@ -214,19 +214,19 @@ class Migrate {
 		// recount comments.
 		wp_defer_comment_counting( true );
 
-		if (! defined( 'SAVEQUERIES' ) ) {
+		if ( ! defined( 'SAVEQUERIES' ) ) {
 			define( 'SAVEQUERIES', false );
 		} elseif ( true === SAVEQUERIES ) {
 			\WP_CLI::error( __( 'Disable WordPress Debug plugins like develop query monitor etc.', 'ms-migration' ) );
 		}
 
-		if (! defined( 'WP_POST_REVISIONS' ) ) {
+		if ( ! defined( 'WP_POST_REVISIONS' ) ) {
 			define( 'WP_POST_REVISIONS', false );
 		} elseif ( true === WP_POST_REVISIONS ) {
 			\WP_CLI::error( __( 'Disable Post Revisions to speed up migration script & avoid unnecessary post creation.', 'ms-migration' ) );
 		}
 
-		if (! defined( 'WP_IMPORTING' ) ) {
+		if ( ! defined( 'WP_IMPORTING' ) ) {
 			define( 'WP_IMPORTING', true );
 		}
 
@@ -253,7 +253,7 @@ class Migrate {
 		wp_cache_flush();
 
 		foreach ( get_taxonomies() as $tax ) {
-			delete_option("{$tax}_children");
+			delete_option( "{$tax}_children" );
 			_get_term_hierarchy( $tax );
 		}
 
@@ -277,7 +277,7 @@ class Migrate {
 		// Define all constants in wp-config file to connect.
 		$server_name = defined( 'MS_MIGRATION_SERVER_NAME' ) ? MS_MIGRATION_SERVER_NAME : ''; // IP comma port no space.
 
-		if ( empty($server_name ) ) {
+		if ( empty( $server_name ) ) {
 			return;
 		}
 
@@ -286,16 +286,16 @@ class Migrate {
 		$dbpass   = defined( 'MS_MIGRATION_USER_PASS' ) ? MS_MIGRATION_USER_PASS : ''; // User Password.
 
 		// Establishes the connection.
-		$this->connection = new \mysqli( $server_name, $username, $dbpass, $dbname );
+		$this->connection = new \mysqli( $server_name, $username, $dbpass, $dbname ); // phpcs:ignore
 
 		// If Success indicate on CLI.
 		if ( ! $this->connection->connect_errno ) {
-			\WP_CLI::success('Connected successfully!');
+			\WP_CLI::success( 'Connected successfully!' );
 		}
 
-		// Check connection
+		// Check connection.
 		if ( $this->connection->connect_errno ) {
-			echo 'Failed to connect to MySQL: ' . $this->connection->connect_error;
+			echo 'Failed to connect to MySQL: ' . $this->connection->connect_error; // phpcs:ignore
 			exit();
 		}
 		$this->connection->set_charset( 'utf8' );
@@ -319,7 +319,7 @@ class Migrate {
 
 			// Error handling.
 			if ( false === $this->statement ) {
-				$this->write_log( print_r( $this->connection->error, true ) );
+				$this->write_log( print_r( $this->connection->error, true ) ); // phpcs:ignore
 
 				// Only try 3 times to reconnect.
 				if ( 3 >= $trial ) {
@@ -350,6 +350,8 @@ class Migrate {
 	 */
 	protected function stop_the_insanity() {
 		/**
+		 * Global object to access WordPress database.
+		 *
 		 * @var object $wp_object_cache
 		 * @var object $wpdb
 		 */
@@ -364,39 +366,39 @@ class Migrate {
 			$wp_object_cache->memcache_debug = [];
 			$wp_object_cache->cache          = [];
 
-			if ( method_exists($wp_object_cache, '__remoteset' ) ) {
+			if ( method_exists( $wp_object_cache, '__remoteset' ) ) {
 				$wp_object_cache->__remoteset();
 			}
 		}
 	}
 
 		/**
-	 * Update post date and modified date while inserting or updating.
-	 *
-	 * Note: WP take current time as modified time when you insert/update post.
-	 * But while migrating content we need to keep existing modified date.
-	 *
-	 * If CMS save date in GMT then
-	 * 1. Save that date as 'post_date_gmt'
-	 * 2. Get site timezone date from GMT date using WP function 'get_date_from_gmt()' for 'post_date'.
-	 *
-	 *    $data['post_date'] = get_date_from_gmt( $postarr['post_date'], 'Y-m-d H:i:s' );
-	 *
-	 * If CMS save date in site timezone then
-	 * 1. Save that date as 'post_date'
-	 * 2. Get site timezone date from GMT date using WP function 'get_gmt_from_date()' for 'post_date_gmt'.
-	 *
-	 *    $data['post_date_gmt'] = get_gmt_from_date( $postarr['post_date'], 'Y-m-d H:i:s' );
-	 *
-	 * You can convert date from UTC to site timezone or site timezone to UTC.
-	 * Because some CMS save date in UTC. So you need to get date for site timezone from UTC date.
-	 * OR get UTC time
-	 *
-	 * @param array $data    An array of slashed post data.
-	 * @param array $postarr An array of sanitized, but otherwise unmodified post data.
-	 *
-	 * @return array
-	 */
+		 * Update post date and modified date while inserting or updating.
+		 *
+		 * Note: WP take current time as modified time when you insert/update post.
+		 * But while migrating content we need to keep existing modified date.
+		 *
+		 * If CMS save date in GMT then
+		 * 1. Save that date as 'post_date_gmt'
+		 * 2. Get site timezone date from GMT date using WP function 'get_date_from_gmt()' for 'post_date'.
+		 *
+		 *    $data['post_date'] = get_date_from_gmt( $postarr['post_date'], 'Y-m-d H:i:s' );
+		 *
+		 * If CMS save date in site timezone then
+		 * 1. Save that date as 'post_date'
+		 * 2. Get site timezone date from GMT date using WP function 'get_gmt_from_date()' for 'post_date_gmt'.
+		 *
+		 *    $data['post_date_gmt'] = get_gmt_from_date( $postarr['post_date'], 'Y-m-d H:i:s' );
+		 *
+		 * You can convert date from UTC to site timezone or site timezone to UTC.
+		 * Because some CMS save date in UTC. So you need to get date for site timezone from UTC date.
+		 * OR get UTC time
+		 *
+		 * @param array $data    An array of slashed post data.
+		 * @param array $postarr An array of sanitized, but otherwise unmodified post data.
+		 *
+		 * @return array
+		 */
 	public function alter_modification_date( $data, $postarr ) {
 
 		// Update post_date field of given post.
@@ -422,11 +424,10 @@ class Migrate {
 	 * @return string
 	 */
 	protected function continue_execute( string $question ): string {
-
-		fwrite( STDOUT, $question . ' [y/n] ' );
+		// User input.
+		fwrite( STDOUT, $question . ' [y/n] ' ); // phpcs:ignore
 
 		return strtolower( trim( fgets( STDIN ) ) );
-
 	}
 
 	/**

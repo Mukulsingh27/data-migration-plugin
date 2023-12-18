@@ -7,6 +7,9 @@
 
 namespace MS\Migration\Inc;
 
+/**
+ * Class for cleanup migration data.
+ */
 class Cleanup extends Migrate {
 
 	/**
@@ -14,7 +17,7 @@ class Cleanup extends Migrate {
 	 *
 	 * @var int
 	 */
-	var int $batch_size = 200;
+	private int $batch_size = 200;
 
 	/**
 	 * WP-CLI command to cleanup migration data.
@@ -63,7 +66,13 @@ class Cleanup extends Migrate {
 		$this->cleanup_user_data();
 
 		$this->write_log( '' );
-		$this->success( sprintf( __( 'Total time taken by this cleanup script: %s', 'ms-migration' ), human_time_diff( $start_time, time() ) ) . PHP_EOL );
+		$this->success(
+			sprintf(
+			// translators: %s: Time taken by script.
+				__( 'Total time taken by this cleanup script: %s', 'ms-migration' ),
+				human_time_diff( $start_time, time() )
+			) . PHP_EOL
+		);
 
 		$this->end_migration();
 		$this->stop_the_insanity();
@@ -85,7 +94,7 @@ class Cleanup extends Migrate {
 		if ( 'y' === $input ) {
 			$this->delete_metas( $keys, $type );
 		} else {
-			$this->warning( $subject. ' meta delete ignored.' . "\n" );
+			$this->warning( $subject . ' meta delete ignored.' . "\n" );
 		}
 	}
 
@@ -147,13 +156,26 @@ class Cleanup extends Migrate {
 			do {
 				if ( true === $this->dry_run ) {
 					$count = 0;
-					$this->write_log( sprintf( __( 'Meta key %s data will be deleted!', 'ms-migration' ), $key ) );
+					$this->write_log(
+						sprintf(
+							// translators: %s: Meta key.
+							__( 'Meta key %s data will be deleted!', 'ms-migration' ),
+							$key
+						)
+					);
 				} else {
-					$count = $wpdb->query( $wpdb->prepare( $sql . ' limit %d', $key, $this->batch_size ) );
+					$count         = $wpdb->query( $wpdb->prepare( $sql . ' limit %d', $key, $this->batch_size ) ); // phpcs:ignore
 					$total_delete += $count;
 				}
-			} while( $count !== 0 );
-			$this->write_log( sprintf( __( 'Total %d records deleted for %s meta!', 'ms-migration' ), $total_delete, $key ) );
+			} while ( 0 !== $count );
+			$this->write_log(
+				sprintf(
+					// translators: %1$d: Total records deleted, %2$s: Meta key.
+					__( 'Total %1$d records deleted for %2$s meta!', 'ms-migration' ),
+					$total_delete,
+					$key
+				)
+			);
 			sleep( 1 );
 			$this->stop_the_insanity();
 		}

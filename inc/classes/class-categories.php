@@ -70,7 +70,7 @@ class Categories extends Migrate {
 	 * : starting from offset
 	 * ---
 	 * default: 0
-	 * 
+	 *
 	 * [--batch=<number>]
 	 * : Number of rows to process at a time.
 	 * ---
@@ -80,7 +80,7 @@ class Categories extends Migrate {
 	 * : Path to the log file.
 	 *
 	 * ## EXAMPLE
-	 * 
+	 *
 	 *      wp ms-migrate-categories migrate --offset=0 --batch=200 --dry-run=false --log-file=./log.txt
 	 *
 	 * @param array $args       Store all the positional arguments.
@@ -94,10 +94,10 @@ class Categories extends Migrate {
 		$this->extract_args( $assoc_args );
 
 		// Offset for the query.
-		$offset = ! empty( $assoc_args[ 'offset' ] ) ? intval( $assoc_args[ 'offset' ] ) : 0;
+		$offset = ! empty( $assoc_args['offset'] ) ? intval( $assoc_args['offset'] ) : 0;
 
 		// Batch size for the query.
-		$batch  = ! empty( $assoc_args[ 'batch' ] ) ? intval( $assoc_args[ 'batch' ] ) : 200;
+		$batch = ! empty( $assoc_args['batch'] ) ? intval( $assoc_args['batch'] ) : 200;
 
 		// Start migration.
 		$this->start_migration();
@@ -114,8 +114,8 @@ class Categories extends Migrate {
 		$this->write_log( __( 'Starting migration of categories...', 'ms-migration' ) );
 
 		do {
-			$count = 0;
-			$categories  = $this->get_categories( $offset, $batch );
+			$count      = 0;
+			$categories = $this->get_categories( $offset, $batch );
 
 			foreach ( $categories as $category ) {
 				if ( ! empty( $progress ) && empty( $this->logs ) ) {
@@ -145,7 +145,8 @@ class Categories extends Migrate {
 		// Print total number of categories.
 		$this->write_log(
 			sprintf(
-				__( '%s: There are total %d number of categories', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of categories found.
+				__( '%1$s: There are total %2$d number of categories', 'ms-migration' ),
 				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_found
 			)
@@ -154,7 +155,8 @@ class Categories extends Migrate {
 		// Print total number of categories added.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of categories which were added', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of categories added.
+				__( '%1$s: Total %2$d number of categories which were added', 'ms-migration' ),
 				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_added
 			)
@@ -163,7 +165,8 @@ class Categories extends Migrate {
 		// Print total number of categories skipped.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of categories which were skipped', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of categories skipped.
+				__( '%1$s: Total %2$d number of categories which were skipped', 'ms-migration' ),
 				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_skipped
 			)
@@ -172,7 +175,8 @@ class Categories extends Migrate {
 		// Print total number of categories failed.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of categories which were failed', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of categories failed.
+				__( '%1$s: Total %2$d number of categories which were failed', 'ms-migration' ),
 				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_failed
 			),
@@ -181,6 +185,7 @@ class Categories extends Migrate {
 		// Print total time taken by the script.
 		$this->write_log(
 			sprintf(
+				// translators: %s: Total time taken by the script.
 				__( 'Total time taken by this migration script: %s', 'ms-migration' ),
 				human_time_diff( $start_time, time() )
 			)
@@ -216,9 +221,10 @@ class Categories extends Migrate {
 			if ( ! empty( $this->dry_run ) ) {
 				$this->write_log(
 					sprintf(
-						__( 'Dry-run: ID:%d %s category already exists, therefore skipping..', 'ms-migration' ),
-						$row[ 'id' ],
-						$row[ 'name' ]
+						// translators: %1$d: Old category id, %2$s: Category name.
+						__( 'Dry-run: ID:%1$d category: %2$s already exists, therefore skipping..', 'ms-migration' ),
+						$row['id'],
+						$row['name']
 					)
 				);
 				$this->total_skipped++;
@@ -226,9 +232,10 @@ class Categories extends Migrate {
 			} else {
 				$this->write_log(
 					sprintf(
-						__( 'ID:%d %s category already exists, therefore skipped', 'ms-migration' ),
-						$row[ 'id' ],
-						$row[ 'name' ]
+						// translators: %1$d: Old category id, %2$s: Category name.
+						__( 'ID:%1$d category: %2$s already exists, therefore skipped', 'ms-migration' ),
+						$row['id'],
+						$row['name']
 					)
 				);
 				$this->total_skipped++;
@@ -239,9 +246,10 @@ class Categories extends Migrate {
 		if ( $this->dry_run ) {
 			$this->write_log(
 				sprintf(
-					__( 'Dry-run: ID:%d %s category will be added', 'ms-migration' ),
-					$row[ 'id' ],
-					$row[ 'name' ]
+					// translators: %1$d: Old category id, %2$s: Category name.
+					__( 'Dry-run: ID:%1$d category: %2$s will be added', 'ms-migration' ),
+					$row['id'],
+					$row['name']
 				)
 			);
 			$this->total_added++;
@@ -252,22 +260,24 @@ class Categories extends Migrate {
 			if ( is_wp_error( $row_data ) ) {
 				$this->warning(
 					sprintf(
-						__( 'Old Category ID:%d category %s failed to insert!', 'ms-migration' ),
-						$row[ 'id' ],
-						$row[ 'name' ]
+						// translators: %1$d: Old category id, %2$s: Category name.
+						__( 'Old Category ID:%1$d category: %2$s failed to insert!', 'ms-migration' ),
+						$row['id'],
+						$row['name']
 					)
 				);
 				$this->total_failed++;
 				return;
 			} else {
-				$row_id = $row_data[ 'term_id' ];
+				$row_id = $row_data['term_id'];
 
 				$this->success(
 					sprintf(
-						__( 'Old category ID:%d WP term ID:%d category %s inserted. Updating meta...', 'ms-migration' ),
-						$row[ 'id' ],
+						// translators: %1$d: Old category id, %2$d: WP term id, %3$s: Category name.
+						__( 'Old category ID:%1$d WP term ID:%2$d category %3$s inserted. Updating meta...', 'ms-migration' ),
+						$row['id'],
 						$row_id,
-						$row[ 'name' ]
+						$row['name']
 					)
 				);
 			}
@@ -281,7 +291,7 @@ class Categories extends Migrate {
 	 * @return int
 	 */
 	private function get_total_categories() : int {
-		$count_query = sprintf('SELECT count(id) FROM %s limit 1', self::CATEGORIES_TABLE);
+		$count_query = sprintf( 'SELECT count(id) FROM %s limit 1', self::CATEGORIES_TABLE );
 		$total_count = $this->get_sql_server_data( $count_query, true );
 		$total_count = array_pop( $total_count );
 
@@ -298,7 +308,7 @@ class Categories extends Migrate {
 	 */
 	private function get_categories( int $offset, int $batch ) : array {
 		// Query to get categories.
-		$query = sprintf(
+		$query      = sprintf(
 			'SELECT * FROM %s LIMIT %d OFFSET %d',
 			self::CATEGORIES_TABLE,
 			$batch,
@@ -326,26 +336,27 @@ class Categories extends Migrate {
 		if ( ! $term ) {
 			$this->warning(
 				sprintf(
-					__( 'Old Category ID:%d category %s not found!', 'ms-migration' ),
-					$row[ 'id' ],
-					$row[ 'name' ]
+					// translators: %1$d: Old category id, %2$s: Category name.
+					__( 'Old Category ID:%1$d category: %2$s not found!', 'ms-migration' ),
+					$row['id'],
+					$row['name']
 				)
 			);
 			return;
 		}
 
-		// Store previous category id and data into wp_termmeta table.
+		// Store previous category id and data into term meta table.
 		$term_id = $term->term_id;
 
 		// Store old category id.
-		if ( ! empty( $row[ 'id' ] ) ) {
-			$old_category_id = $row[ 'id' ];
+		if ( ! empty( $row['id'] ) ) {
+			$old_category_id = $row['id'];
 			update_term_meta( $term_id, '_old_category_id', $old_category_id );
 		}
 
 		// Store category data.
 		$legacy_category_data = $row;
-		unset( $legacy_category_data[ 'id' ] );
+		unset( $legacy_category_data['id'] );
 		update_term_meta( $term_id, '_legacy_category_data', $legacy_category_data );
 	}
 }

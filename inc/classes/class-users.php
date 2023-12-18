@@ -95,8 +95,8 @@ class Users extends Migrate {
 	 * : Path to the log file.
 	 *
 	 * ## EXAMPLES
-	 * 
-	 *  	wp ms-migrate-users migrate --offset=0 --batch=200 --dry-run=false --log-file=./log.txt
+	 *
+	 *      wp ms-migrate-users migrate --offset=0 --batch=200 --dry-run=false --log-file=./log.txt
 	 *
 	 * @param array $args       Store all the positional arguments.
 	 * @param array $assoc_args Store all the associative arguments.
@@ -109,10 +109,10 @@ class Users extends Migrate {
 		$this->extract_args( $assoc_args );
 
 		// Offset for the query.
-		$offset = ! empty( $assoc_args[ 'offset' ] ) ? intval( $assoc_args[ 'offset' ] ) : 0;
+		$offset = ! empty( $assoc_args['offset'] ) ? intval( $assoc_args['offset'] ) : 0;
 
 		// Batch size for the query.
-		$batch  = ! empty( $assoc_args[ 'batch' ] ) ? intval( $assoc_args[ 'batch' ] ) : 200;
+		$batch = ! empty( $assoc_args['batch'] ) ? intval( $assoc_args['batch'] ) : 200;
 
 		// Start migration.
 		$this->start_migration();
@@ -121,8 +121,8 @@ class Users extends Migrate {
 		$total_users = $this->get_total_users();
 
 		// Progressbar.
-		if (empty( $this->logs ) ) {
-			$progress = WP_CLI\Utils\make_progress_bar( __( 'Users Migration', 'ms-migration' ), $total_users, 10);
+		if ( empty( $this->logs ) ) {
+			$progress = WP_CLI\Utils\make_progress_bar( __( 'Users Migration', 'ms-migration' ), $total_users, 10 );
 		}
 
 		// Print starting migration script.
@@ -133,7 +133,7 @@ class Users extends Migrate {
 			$users = $this->get_users( $offset, $batch );
 
 			foreach ( $users as $user ) {
-				if (! empty( $progress ) && empty( $this->logs ) ) {
+				if ( ! empty( $progress ) && empty( $this->logs ) ) {
 					$progress->tick();
 				}
 
@@ -155,12 +155,13 @@ class Users extends Migrate {
 		} while ( ! empty( $users ) || $count === $batch );
 
 		// Add a blank line to separate Overall result.
-		$this->write_log('');
+		$this->write_log( '' );
 
 		// Print total number of user added.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of users which were added', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of users added.
+				__( '%1$s: Total %2$d number of users which were added', 'ms-migration' ),
 				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_added
 			)
@@ -169,7 +170,8 @@ class Users extends Migrate {
 		// Print total number of user skipped.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of users which were skipped', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of users skipped.
+				__( '%1$s: Total %2$d number of users which were skipped', 'ms-migration' ),
 				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_skipped
 			)
@@ -178,7 +180,8 @@ class Users extends Migrate {
 		// Print total number of user failed.
 		$this->write_log(
 			sprintf(
-				__( '%s: Total %d number of users which were failed', 'ms-migration' ),
+				// translators: %1$s: Command Type, %2$d: Total number of users failed.
+				__( '%1$s: Total %2$d number of users which were failed', 'ms-migration' ),
 				empty( $this->dry_run ) ? __( 'Migration Result', 'ms-migration' ) : __( 'Dry-Run Result', 'ms-migration' ),
 				$this->total_failed
 			)
@@ -186,13 +189,14 @@ class Users extends Migrate {
 
 		$this->write_log(
 			sprintf(
+				// translators: %s: Total time taken by the script.
 				__( 'Total time taken by this migration script: %s', 'ms-migration' ),
 				human_time_diff( $start_time, time() )
 			)
 		);
 
 		// Stop the progress bar.
-		if (! empty( $progress ) && empty( $this->logs ) ) {
+		if ( ! empty( $progress ) && empty( $this->logs ) ) {
 			$progress->finish();
 		}
 
@@ -218,12 +222,13 @@ class Users extends Migrate {
 		$user_display_name = $this->get_user_display_name( $user );
 
 		// Check for valid and non-empty email.
-		if (! is_email( $sanitized_email ) ) {
+		if ( ! is_email( $sanitized_email ) ) {
 			$this->warning(
 				sprintf(
+					// translators: %1$s: Command Type, %2$d: Old User ID, %3$s: User display name.
 					__( '%1$s: Old User ID:%2$d user %3$s will not be added due to invalid email!', 'ms-migration' ),
 					empty( $this->dry_run ) ? __( 'Migration', 'ms-migration' ) : __( 'Dry-Run', 'ms-migration' ),
-					$user[ 'id' ],
+					$user['id'],
 					$user_display_name
 				)
 			);
@@ -240,7 +245,7 @@ class Users extends Migrate {
 		}
 
 		// Check if user already exists.
-		$user_id = $this->user_exists( $user[ 'email' ] );
+		$user_id = $this->user_exists( $user['email'] );
 
 		if ( $this->dry_run ) {
 			if ( ! empty( $user_id ) ) {
@@ -250,8 +255,9 @@ class Users extends Migrate {
 
 				$this->success(
 					sprintf(
-						__( 'Dry-run: Old User ID:%d user %s will be skipped!', 'ms-migration' ),
-						$user[ 'id' ],
+						// translators: %1$d: Old User ID, %2$s: User display name.
+						__( 'Dry-run: Old User ID:%1$d user %2$s will be skipped!', 'ms-migration' ),
+						$user['id'],
 						$user_display_name
 					)
 				);
@@ -262,8 +268,9 @@ class Users extends Migrate {
 
 				$this->success(
 					sprintf(
-						__( 'Dry-run: New User ID:%d user %s will be added!', 'ms-migration' ),
-						$user[ 'id' ],
+						// translators: %1$d: New User ID, %2$s: User display name.
+						__( 'Dry-run: New User ID:%1$d user %2$s will be added!', 'ms-migration' ),
+						$user['id'],
 						$user_display_name
 					)
 				);
@@ -278,8 +285,9 @@ class Users extends Migrate {
 
 				$this->success(
 					sprintf(
-						__( 'Old User ID:%d user %s skipped!', 'ms-migration' ),
-						$user[ 'id' ],
+						// translators: %1$d: Old User ID, %2$s: User display name.
+						__( 'Old User ID:%1$d user %2$s skipped!', 'ms-migration' ),
+						$user['id'],
 						$user_display_name
 					)
 				);
@@ -300,16 +308,16 @@ class Users extends Migrate {
 	 * @return int
 	 */
 	private function insert_user( array $user, int $user_id = null ) {
-		$user_login = substr( $user[ 'user_login' ], 0, 60);
+		$user_login = substr( $user['user_login'], 0, 60 );
 
 		// If user login is empty or already exists then create new user login with first name, last name.
 		if ( empty( $user_login ) || username_exists( $user_login ) ) {
-			if ( ! empty( $user[ 'first_name' ] ) ) {
-				$user_login = htmlspecialchars( strtolower( $user[ 'first_name' ] ) ) . '-';
+			if ( ! empty( $user['first_name'] ) ) {
+				$user_login = htmlspecialchars( strtolower( $user['first_name'] ) ) . '-';
 			}
 
-			if ( ! empty( $user[ 'last_name'] ) ) {
-				$user_login .= htmlspecialchars( strtolower( $user[ 'last_name' ] ) );
+			if ( ! empty( $user['last_name'] ) ) {
+				$user_login .= htmlspecialchars( strtolower( $user['last_name'] ) );
 			}
 
 			$user_login = sanitize_user( $user_login, true );
@@ -320,22 +328,22 @@ class Users extends Migrate {
 
 		// User arguments.
 		$user_args = [
-			'user_login'      => $user_login,
-			'user_email'      => $user[ 'email' ] ?? null,
-			'display_name'    => trim( $display_name ),
-			'first_name'      => $user[ 'first_name' ] ?? null,
-			'last_name'       => $user[ 'last_name' ] ?? null,
-			'role'            => $user[ 'role' ] ?? null,
-			'user_pass'       => 'password', // Passwords are not migrated.
-			'meta_input'      => [
+			'user_login'   => $user_login,
+			'user_email'   => $user['email'] ?? null,
+			'display_name' => trim( $display_name ),
+			'first_name'   => $user['first_name'] ?? null,
+			'last_name'    => $user['last_name'] ?? null,
+			'role'         => $user['role'] ?? null,
+			'user_pass'    => 'password', // Passwords are not migrated.
+			'meta_input'   => [
 				'_legacy_user_data' => $user,
 				'_old_user_id'      => $user['id'] ?? null,
 			],
 		];
 
 		// Set user id. If user id is set then user will be updated.
-		if (! empty( $user_id ) && 0 !== $user_id ) {
-			$user_args[ 'ID' ] = $user_id;
+		if ( ! empty( $user_id ) && 0 !== $user_id ) {
+			$user_args['ID'] = $user_id;
 		}
 
 		$inserted_user_id = wp_insert_user( $user_args );
@@ -344,8 +352,9 @@ class Users extends Migrate {
 			$this->total_failed++;
 			$this->warning(
 				sprintf(
-					__( 'Failed: Old user ID:%d user %s failed to add!', 'ms-migration' ),
-					$user[ 'id' ],
+					// translators: %1$d: Old user ID, %2$s: User display name.
+					__( 'Failed: Old user ID:%1$d user %2$s failed to add!', 'ms-migration' ),
+					$user['id'],
 					$display_name
 				)
 			);
@@ -359,8 +368,9 @@ class Users extends Migrate {
 
 			$this->success(
 				sprintf(
-					__( 'Old user ID:%d user %s skipped!', 'ms-migration' ),
-					$user[ 'id' ],
+					// translators: %1$d: Old user ID, %2$s: User display name.
+					__( 'Old user ID:%1$d user %2$s skipped!', 'ms-migration' ),
+					$user['id'],
 					$display_name
 				)
 			);
@@ -372,8 +382,9 @@ class Users extends Migrate {
 
 			$this->success(
 				sprintf(
-					__( 'Old user ID:%d user %s added!', 'ms-migration' ),
-					$user[ 'id' ],
+					// translators: %1$d: Old user ID, %2$s: User display name.
+					__( 'Old user ID:%1$d user %2$s added!', 'ms-migration' ),
+					$user['id'],
 					$display_name
 				)
 			);
@@ -418,7 +429,7 @@ class Users extends Migrate {
 
 	/**
 	 * Get user display name.
-	 * 
+	 *
 	 * @param array $user User.
 	 *
 	 * @return string
@@ -426,8 +437,8 @@ class Users extends Migrate {
 	private function get_user_display_name( array $user ) : string {
 		$display_name = sprintf(
 			'%1$s %2$s',
-			$user[ 'first_name' ] ?? '',
-			$user[ 'last_name' ] ?? ''
+			$user['first_name'] ?? '',
+			$user['last_name'] ?? ''
 		);
 
 		return $display_name;
@@ -442,7 +453,7 @@ class Users extends Migrate {
 	 */
 	private function user_exists( string $user_email ) : int {
 		$user_email = sanitize_email( $user_email );
-		$user = get_user_by('email', $user_email);
+		$user       = get_user_by( 'email', $user_email );
 
 		if ( ! empty( $user ) ) {
 			$this->user_emails[] = $user_email;

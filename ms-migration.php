@@ -21,13 +21,13 @@
  * @license GPL-2.0+
  */
 
-define( 'MS_MIGRATION_PLUGIN_PATH', plugin_dir_path(__FILE__) );
+define( 'MS_MIGRATION_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
 require_once MS_MIGRATION_PLUGIN_PATH . '/inc/helpers/autoloader.php';
 
 // Init plugin.
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 
-    \MS\Migration\Inc\Plugin::get_instance();
+	\MS\Migration\Inc\Plugin::get_instance();
 
 }

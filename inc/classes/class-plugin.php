@@ -23,8 +23,7 @@ class Plugin {
 	 *
 	 * @return object Instance of current class.
 	 */
-	public static function get_instance()
-	{
+	public static function get_instance() {
 		static $instance = false;
 
 		if ( false === $instance ) {
