@@ -322,6 +322,7 @@ class Categories extends Migrate {
 	/**
 	 * Store category meta.
 	 *
+	 * @param int   $term_id Term id.
 	 * @param array $row $row data.
 	 *
 	 * @return void
@@ -332,7 +333,7 @@ class Categories extends Migrate {
 			$old_category_id = $row['id'];
 			update_term_meta( $term_id, '_old_category_id', $old_category_id );
 		}
-	
+
 		// Store category data.
 		$legacy_category_data = $row;
 		unset( $legacy_category_data['id'] );
