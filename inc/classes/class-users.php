@@ -328,6 +328,7 @@ class Users extends Migrate {
 
 		// Check if role exists and if not then create new role.
 		if ( ! empty( $user['role'] ) && ! get_role( $user['role'] ) ) {
+			// Capabilities can be edited later according to the need.
 			$role = add_role( $user['role'], ucfirst( $user['role'] ), get_role( 'administrator' )->capabilities );
 		} else {
 			$role = $user['role'];
