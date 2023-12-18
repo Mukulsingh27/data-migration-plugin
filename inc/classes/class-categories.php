@@ -330,11 +330,10 @@ class Categories extends Migrate {
 	private function store_category_meta( int $term_id, array $row ): void {
 		// Store old category id.
 		if ( ! empty( $row['id'] ) ) {
-			$old_category_id = $row['id'];
-			update_term_meta( $term_id, '_old_category_id', $old_category_id );
+			update_term_meta( $term_id, '_old_category_id', $row['id'] );
 		}
 
-		// Store category data.
+		// Store old category data.
 		$legacy_category_data = $row;
 		unset( $legacy_category_data['id'] );
 		update_term_meta( $term_id, '_legacy_category_data', $legacy_category_data );

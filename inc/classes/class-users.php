@@ -326,14 +326,6 @@ class Users extends Migrate {
 		// Get user display name.
 		$display_name = $this->get_user_display_name( $user );
 
-		// Check if role exists and if not then create new role.
-		if ( ! empty( $user['role'] ) && ! get_role( $user['role'] ) ) {
-			// Capabilities can be edited later according to the need.
-			$role = add_role( $user['role'], ucfirst( $user['role'] ), get_role( 'administrator' )->capabilities );
-		} else {
-			$role = $user['role'];
-		}
-
 		// User arguments.
 		$user_args = [
 			'user_login'   => $user_login,
@@ -341,7 +333,7 @@ class Users extends Migrate {
 			'display_name' => trim( $display_name ),
 			'first_name'   => $user['first_name'] ?? null,
 			'last_name'    => $user['last_name'] ?? null,
-			'role'         => $role,
+			'role'         => $this->handle_user_roles( $user['role'] ?? null ),
 			'user_pass'    => 'password', // Passwords are not migrated.
 			'meta_input'   => [
 				'_legacy_user_data' => $user,
@@ -470,5 +462,29 @@ class Users extends Migrate {
 
 		$this->user_emails[] = $user_email;
 		return 0;
+	}
+
+	/**
+	 * Handle user roles.
+	 *
+	 * @param string $role Role.
+	 *
+	 * @return string
+	 */
+	private function handle_user_roles( string $role ) : string {
+		// Map old roles to new roles.
+		$role_mapping = [
+			'admin'  => 'administrator',
+			'author' => 'author',
+			// Add more mappings as needed.
+		];
+
+		// Check if the old role is in the mapping.
+		if ( array_key_exists( $role, $role_mapping ) ) {
+			return $role_mapping[ $role ];
+		}
+
+		// If the old role is not in the mapping, default to 'subscriber'.
+		return 'subscriber';
 	}
 }
