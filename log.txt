@@ -1,23 +1,34 @@
-Fetching all users
-Fetched 10 users
-Fetching all categories
-Fetched 9 categories
-Starting migration of articles...
+Starting migration of categories...
+Dry-run: ID:1 category: sed will be added
+Dry-run: ID:2 category: sed will be added
+Dry-run: ID:3 category: magnam will be added
+Dry-run: ID:4 category: dolores will be added
+Dry-run: ID:5 category: eligendi will be added
+Dry-run: ID:6 category: totam will be added
+Dry-run: ID:7 category: a will be added
+Dry-run: ID:8 category: qui will be added
+Dry-run: ID:9 category: dolor will be added
+Dry-run: ID:10 category: occaecati will be added
 
----------Processing "post" Page 10 - Offset 45 ----------
+Dry-Run Result: There are total 10 number of categories
+Dry-Run Result: Total 10 number of categories which were added
+Dry-Run Result: Total 0 number of categories which were skipped
+Dry-Run Result: Total 0 number of categories which were failed
+Total time taken by this migration script: 1 second
+Starting migration of categories...
+Success: Old category ID:1 WP term ID:83 category sed inserted. Updating meta...
+ID:2 category: sed already exists, therefore skipped
+Success: Old category ID:3 WP term ID:84 category magnam inserted. Updating meta...
+Success: Old category ID:4 WP term ID:85 category dolores inserted. Updating meta...
+Success: Old category ID:5 WP term ID:86 category eligendi inserted. Updating meta...
+Success: Old category ID:6 WP term ID:87 category totam inserted. Updating meta...
+Success: Old category ID:7 WP term ID:88 category a inserted. Updating meta...
+Success: Old category ID:8 WP term ID:89 category qui inserted. Updating meta...
+Success: Old category ID:9 WP term ID:90 category dolor inserted. Updating meta...
+Success: Old category ID:10 WP term ID:91 category occaecati inserted. Updating meta...
 
-Success: Successfully Migrated Post 47.
-Success: Successfully Migrated Post 48.
-Success: Successfully Migrated Post 49.
-Success: Successfully Migrated Post 50.
-Success: Successfully Migrated Post 51.
-
----------Processing "post" Page 11 - Offset 50 ----------
-
-
-Migration Result: There are total 5 number of posts
-Migration Result: Total 5 number of posts which were added
-Migration Result: Total 0 number of posts which were updated
-Migration Result: Total 0 number of posts which were skipped
-Migration Result: Total 0 number of posts which were failed
-Total time taken by this migration script: 3 seconds
+Migration Result: There are total 10 number of categories
+Migration Result: Total 9 number of categories which were added
+Migration Result: Total 1 number of categories which were skipped
+Migration Result: Total 0 number of categories which were failed
+Total time taken by this migration script: 1 second

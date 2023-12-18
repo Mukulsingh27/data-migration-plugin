@@ -4,7 +4,7 @@
 
 Provides WP_CLI commands to migrate data to your new WordPress site using command line interface.
 
-## Migration from MSSQL
+## Migration from MySQL
 
 Define DB connection constants in wp-config.php.
 

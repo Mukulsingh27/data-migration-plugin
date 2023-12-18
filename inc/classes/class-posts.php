@@ -56,7 +56,7 @@ class Posts extends Migrate {
 	 *
 	 * @var string
 	 */
-	private string $type = 'Post';
+	private string $type = 'post';
 
 	/**
 	 * WP-CLI command to migrate posts.
@@ -295,7 +295,7 @@ class Posts extends Migrate {
 			'post_modified' => ! empty( $row['updated'] ) ? $row['updated'] : '',
 			'post_date'     => ! empty( $row['added'] ) ? $row['added'] : '',
 			'post_content'  => ! empty( $row['html'] ) ? $row['html'] : '',
-			'post_type'     => 'post',
+			'post_type'     => $this->type,
 			'post_status'   => 'publish',
 		];
 
