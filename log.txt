@@ -1,0 +1,176 @@
+Starting Users Migration
+Success: Old user ID:1 user Madison Schoen added!
+Success: Old user ID:2 user Larry Heidenreich added!
+Success: Old user ID:3 user Kaycee Schaefer added!
+Success: Old user ID:4 user Barry Spencer added!
+Success: Old user ID:5 user Libbie Wiegand added!
+Success: Old user ID:6 user Sydnee Franecki added!
+Success: Old user ID:7 user Foster Feeney added!
+Success: Old user ID:8 user Lexus Herman added!
+Success: Old user ID:9 user Amina Cruickshank added!
+Success: Old user ID:10 user Lenna Kuhic added!
+
+Migration Result: Total 10 number of users which were added
+Migration Result: Total 0 number of users which were skipped
+Migration Result: Total 0 number of users which were failed
+Total time taken by this migration script: 2 seconds
+Starting Users Migration
+Success: Old user ID:1 user Madison Schoen added!
+Success: Old user ID:2 user Larry Heidenreich added!
+Success: Old user ID:3 user Kaycee Schaefer added!
+Success: Old user ID:4 user Barry Spencer added!
+Success: Old user ID:5 user Libbie Wiegand added!
+Success: Old user ID:6 user Sydnee Franecki added!
+Success: Old user ID:7 user Foster Feeney added!
+Success: Old user ID:8 user Lexus Herman added!
+Success: Old user ID:9 user Amina Cruickshank added!
+Success: Old user ID:10 user Lenna Kuhic added!
+
+Migration Result: Total 10 number of users which were added
+Migration Result: Total 0 number of users which were skipped
+Migration Result: Total 0 number of users which were failed
+Total time taken by this migration script: 2 seconds
+Starting migration of categories...
+Success: Old category ID:1 WP term ID:92 category sed inserted. Updating meta...
+ID:2 category: sed already exists, therefore skipped
+Success: Old category ID:3 WP term ID:93 category magnam inserted. Updating meta...
+Success: Old category ID:4 WP term ID:94 category dolores inserted. Updating meta...
+Success: Old category ID:5 WP term ID:95 category eligendi inserted. Updating meta...
+Success: Old category ID:6 WP term ID:96 category totam inserted. Updating meta...
+Success: Old category ID:7 WP term ID:97 category a inserted. Updating meta...
+Success: Old category ID:8 WP term ID:98 category qui inserted. Updating meta...
+Success: Old category ID:9 WP term ID:99 category dolor inserted. Updating meta...
+Success: Old category ID:10 WP term ID:100 category occaecati inserted. Updating meta...
+
+Migration Result: There are total 10 number of categories
+Migration Result: Total 9 number of categories which were added
+Migration Result: Total 1 number of categories which were skipped
+Migration Result: Total 0 number of categories which were failed
+Total time taken by this migration script: 1 second
+Fetching all users
+Fetched 10 users
+Fetching all categories
+Fetched 9 categories
+Starting migration of articles...
+
+---------Processing "post" Page 1 - Offset 0 ----------
+
+Success: Successfully Migrated post 2.
+Success: Successfully Migrated post 3.
+Success: Successfully Migrated post 4.
+Success: Successfully Migrated post 5.
+Success: Successfully Migrated post 6.
+
+---------Processing "post" Page 2 - Offset 5 ----------
+
+Success: Successfully Migrated post 7.
+Success: Successfully Migrated post 8.
+Success: Successfully Migrated post 9.
+Success: Successfully Migrated post 10.
+Success: Successfully Migrated post 11.
+
+---------Processing "post" Page 3 - Offset 10 ----------
+
+Success: Successfully Migrated post 12.
+Success: Successfully Migrated post 13.
+Success: Successfully Migrated post 14.
+Success: Successfully Migrated post 15.
+Success: Successfully Migrated post 16.
+
+---------Processing "post" Page 4 - Offset 15 ----------
+
+Success: Successfully Migrated post 17.
+Success: Successfully Migrated post 18.
+Success: Successfully Migrated post 19.
+Success: Successfully Migrated post 20.
+Success: Successfully Migrated post 21.
+
+---------Processing "post" Page 5 - Offset 20 ----------
+
+Success: Successfully Migrated post 22.
+Success: Successfully Migrated post 23.
+Success: Successfully Migrated post 24.
+Success: Successfully Migrated post 25.
+Success: Successfully Migrated post 26.
+
+---------Processing "post" Page 6 - Offset 25 ----------
+
+Success: Successfully Migrated post 27.
+Success: Successfully Migrated post 28.
+Success: Successfully Migrated post 29.
+Success: Successfully Migrated post 30.
+Success: Successfully Migrated post 31.
+
+---------Processing "post" Page 7 - Offset 30 ----------
+
+Success: Successfully Migrated post 32.
+Success: Successfully Migrated post 33.
+Success: Successfully Migrated post 34.
+Success: Successfully Migrated post 35.
+Success: Successfully Migrated post 36.
+
+---------Processing "post" Page 8 - Offset 35 ----------
+
+Success: Successfully Migrated post 37.
+Success: Successfully Migrated post 38.
+Success: Successfully Migrated post 39.
+Success: Successfully Migrated post 40.
+Success: Successfully Migrated post 41.
+
+---------Processing "post" Page 9 - Offset 40 ----------
+
+Success: Successfully Migrated post 42.
+Success: Successfully Migrated post 43.
+Success: Successfully Migrated post 44.
+Success: Successfully Migrated post 45.
+Success: Successfully Migrated post 46.
+
+---------Processing "post" Page 10 - Offset 45 ----------
+
+Success: Successfully Migrated post 47.
+Success: Successfully Migrated post 48.
+Success: Successfully Migrated post 49.
+Success: Successfully Migrated post 50.
+Success: Successfully Migrated post 51.
+
+---------Processing "post" Page 11 - Offset 50 ----------
+
+
+Migration Result: There are total 50 number of posts
+Migration Result: Total 50 number of posts which were added
+Migration Result: Total 0 number of posts which were updated
+Migration Result: Total 0 number of posts which were skipped
+Migration Result: Total 0 number of posts which were failed
+Total time taken by this migration script: 12 seconds
+Starting Users Migration
+Success: Old User ID:1 user Madison Schoen skipped!
+Success: Old User ID:2 user Larry Heidenreich skipped!
+Success: Old User ID:3 user Kaycee Schaefer skipped!
+Success: Old User ID:4 user Barry Spencer skipped!
+Success: Old User ID:5 user Libbie Wiegand skipped!
+Success: Old User ID:6 user Sydnee Franecki skipped!
+Success: Old User ID:7 user Foster Feeney skipped!
+Success: Old User ID:8 user Lexus Herman skipped!
+Success: Old User ID:9 user Amina Cruickshank skipped!
+Success: Old User ID:10 user Lenna Kuhic skipped!
+
+Migration Result: Total 0 number of users which were added
+Migration Result: Total 10 number of users which were skipped
+Migration Result: Total 0 number of users which were failed
+Total time taken by this migration script: 2 seconds
+Starting Users Migration
+Success: Old user ID:1 user Madison Schoen added!
+Success: Old user ID:2 user Larry Heidenreich added!
+Success: Old user ID:3 user Kaycee Schaefer added!
+Success: Old user ID:4 user Barry Spencer added!
+Success: Old user ID:5 user Libbie Wiegand added!
+Success: Old user ID:6 user Sydnee Franecki added!
+Success: Old user ID:7 user Foster Feeney added!
+Success: Old user ID:8 user Lexus Herman added!
+Success: Old user ID:9 user Amina Cruickshank added!
+Success: Old user ID:10 user Lenna Kuhic added!
+
+Migration Result: Total 10 number of users which were added
+Migration Result: Total 0 number of users which were skipped
+Migration Result: Total 0 number of users which were failed
+Total time taken by this migration script: 2 seconds
